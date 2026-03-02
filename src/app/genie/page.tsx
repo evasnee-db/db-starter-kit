@@ -573,10 +573,26 @@ function DetailPanel({
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
 export default function GeniePage() {
+  const searchParams = typeof window !== "undefined"
+    ? new URLSearchParams(window.location.search)
+    : null
+  const incomingQuery = searchParams?.get("q") ?? ""
+
   const [activeNav, setActiveNav] = React.useState("genie")
-  const [selectedId, setSelectedId] = React.useState<string>("1")
-  const [isNewChat, setIsNewChat] = React.useState(false)
+  const [selectedId, setSelectedId] = React.useState<string>("")
+  const [isNewChat, setIsNewChat] = React.useState(true)
   const [allChats, setAllChats] = React.useState<AgentChat[]>(AGENT_CHATS)
+
+  // If we arrived with a ?q= param, immediately submit it as a new chat
+  React.useEffect(() => {
+    if (incomingQuery) {
+      handleNewChatSubmit(incomingQuery)
+    } else {
+      setSelectedId("1")
+      setIsNewChat(false)
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const needsAttention = allChats.filter((c) => c.status === "needs-attention")
   const chats = allChats.filter((c) => c.status !== "needs-attention")
