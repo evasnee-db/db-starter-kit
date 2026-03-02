@@ -1,0 +1,207 @@
+/**
+ * globals.css — DuBois → shadcn/ui theme
+ *
+ * Drop this file into src/app/globals.css (Next.js App Router) to apply the
+ * Databricks DuBois design system on top of shadcn/ui's CSS variable system.
+ *
+ * DuBois primitive tokens are mapped to shadcn semantic variables so every
+ * shadcn component automatically uses the correct Databricks colors.
+ *
+ * Usage:
+ *   1. Replace your project's src/app/globals.css with this file.
+ *   2. Keep the @tailwind directives at the top.
+ *   3. Extend with project-specific overrides below the DuBois block.
+ */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── DuBois Primitive Color Reference (do not use directly in components) ───
+ *
+ * blue400: #4BA3D6   blue500: #2E86C1   blue600: #2272B4
+ * blue700: #0E538B   blue800: #04355D
+ *
+ * grey050: #F6F7F9   grey100: #E8ECF0   grey200: #D1DCE5
+ * grey300: #BDCDD9   grey400: #8D9FAD   grey500: #5F7281
+ * grey600: #44535F   grey700: #2A3A45   grey800: #11171C
+ *
+ * red500:  #E83A5F   red600:  #C82D4C   red700:  #9E1D38
+ * green600: #277C43  yellow600: #BE501E
+ * white:   #FFFFFF
+ * ─────────────────────────────────────────────────────────────────────────── */
+
+@layer base {
+  :root {
+    /* ── Core surfaces ─────────────────────────────────────────────────────── */
+    --background:          0 0% 100%;          /* white — backgroundPrimary    */
+    --foreground:          208 24% 9%;         /* grey800 — textPrimary        */
+
+    --card:                0 0% 100%;          /* white                        */
+    --card-foreground:     208 24% 9%;         /* grey800                      */
+
+    --popover:             0 0% 100%;          /* white                        */
+    --popover-foreground:  208 24% 9%;         /* grey800                      */
+
+    /* ── Primary action (blue600) ──────────────────────────────────────────── */
+    --primary:             207 68% 42%;        /* blue600 #2272B4              */
+    --primary-foreground:  0 0% 100%;          /* white                        */
+
+    /* ── Secondary surface (grey050) ───────────────────────────────────────── */
+    --secondary:           218 18% 97%;        /* grey050 #F6F7F9              */
+    --secondary-foreground: 208 24% 9%;        /* grey800                      */
+
+    /* ── Muted / subdued surface ───────────────────────────────────────────── */
+    --muted:               218 18% 97%;        /* grey050 #F6F7F9              */
+    --muted-foreground:    207 15% 44%;        /* grey500 #5F7281 — textSecondary */
+
+    /* ── Accent (hover highlight) ──────────────────────────────────────────── */
+    --accent:              218 18% 97%;        /* grey050                      */
+    --accent-foreground:   208 24% 9%;         /* grey800                      */
+
+    /* ── Destructive (red600) ──────────────────────────────────────────────── */
+    --destructive:         348 63% 48%;        /* red600 #C82D4C               */
+    --destructive-foreground: 0 0% 100%;       /* white                        */
+
+    /* ── Borders & inputs ──────────────────────────────────────────────────── */
+    --border:              210 18% 93%;        /* grey100 #E8ECF0              */
+    --input:               210 18% 93%;        /* grey100 — input border default */
+    --ring:                207 68% 42%;        /* blue600 — focus ring         */
+
+    /* ── Border radius — DuBois uses 4px (tighter than shadcn's 8px default) ─ */
+    --radius:              0.25rem;            /* 4px = borderRadiusSm        */
+
+    /* ── Semantic additions (not in shadcn core) ───────────────────────────── */
+    --warning:             22 73% 43%;         /* yellow600 #BE501E            */
+    --warning-foreground:  0 0% 100%;
+    --success:             141 52% 32%;        /* green600 #277C43             */
+    --success-foreground:  0 0% 100%;
+
+    /* ── Chart colors (DuBois sequential) ─────────────────────────────────── */
+    --chart-1:             207 68% 42%;        /* blue600                      */
+    --chart-2:             141 52% 32%;        /* green600                     */
+    --chart-3:             22 73% 43%;         /* yellow600                    */
+    --chart-4:             348 63% 48%;        /* red600                       */
+    --chart-5:             280 60% 55%;        /* purple — DuBois secondary    */
+  }
+
+  .dark {
+    /* ── Core surfaces ─────────────────────────────────────────────────────── */
+    --background:          208 24% 9%;         /* grey800 #11171C              */
+    --foreground:          210 18% 93%;        /* grey100 #E8ECF0              */
+
+    --card:                207 24% 13%;        /* slightly lighter than grey800 */
+    --card-foreground:     210 18% 93%;        /* grey100                      */
+
+    --popover:             207 24% 13%;
+    --popover-foreground:  210 18% 93%;
+
+    /* ── Primary action (blue500 — slightly lighter for dark mode) ─────────── */
+    --primary:             207 62% 47%;        /* blue500 #2E86C1              */
+    --primary-foreground:  0 0% 100%;
+
+    /* ── Secondary surface (grey700) ───────────────────────────────────────── */
+    --secondary:           207 24% 22%;        /* grey700 #2A3A45              */
+    --secondary-foreground: 210 18% 93%;       /* grey100                      */
+
+    /* ── Muted ─────────────────────────────────────────────────────────────── */
+    --muted:               207 24% 22%;        /* grey700                      */
+    --muted-foreground:    207 25% 67%;        /* grey300 #BDCDD9              */
+
+    /* ── Accent ─────────────────────────────────────────────────────────────  */
+    --accent:              207 24% 22%;        /* grey700                      */
+    --accent-foreground:   210 18% 93%;        /* grey100                      */
+
+    /* ── Destructive (red500 — brighter for dark mode contrast) ───────────── */
+    --destructive:         348 78% 57%;        /* red500 #E83A5F               */
+    --destructive-foreground: 0 0% 100%;
+
+    /* ── Borders & inputs ──────────────────────────────────────────────────── */
+    --border:              207 24% 22%;        /* grey700 #2A3A45              */
+    --input:               207 24% 22%;        /* grey700                      */
+    --ring:                207 60% 57%;        /* blue400 — brighter focus ring */
+
+    /* ── Semantic additions ─────────────────────────────────────────────────  */
+    --warning:             22 80% 55%;         /* lighter warning for dark mode */
+    --warning-foreground:  208 24% 9%;
+    --success:             141 55% 45%;        /* lighter success for dark mode */
+    --success-foreground:  208 24% 9%;
+
+    /* ── Chart colors ───────────────────────────────────────────────────────  */
+    --chart-1:             207 62% 47%;
+    --chart-2:             141 55% 45%;
+    --chart-3:             22 80% 55%;
+    --chart-4:             348 78% 57%;
+    --chart-5:             280 65% 65%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    /* DuBois base font size is 13px, not 16px */
+    font-size: 13px;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: "Helvetica Neue", ui-sans-serif, system-ui, -apple-system, sans-serif;
+    font-size: 13px;
+    line-height: 20px;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* DuBois typography scale */
+  h1 { font-size: 32px; line-height: 40px; font-weight: 600; }
+  h2 { font-size: 22px; line-height: 28px; font-weight: 600; }
+  h3 { font-size: 18px; line-height: 24px; font-weight: 600; }
+  h4 { font-size: 15px; line-height: 20px; font-weight: 600; }
+  h5 { font-size: 13px; line-height: 20px; font-weight: 600; }
+  h6 { font-size: 12px; line-height: 16px; font-weight: 600; }
+
+  /* Bold = 600 in DuBois, never 700 */
+  b, strong { font-weight: 600; }
+
+  /* DuBois focus style */
+  :focus-visible {
+    outline: 2px solid hsl(var(--ring));
+    outline-offset: 2px;
+  }
+}
+
+/* ─── DuBois AI Gradient Utilities ─────────────────────────────────────────── */
+@layer utilities {
+  .bg-ai-gradient {
+    background: linear-gradient(135deg, #4299E0 20.5%, #CA42E0 46.91%, #FF5F46 79.5%);
+  }
+
+  .text-ai-gradient {
+    background: linear-gradient(135deg, #4299E0 20.5%, #CA42E0 46.91%, #FF5F46 79.5%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .border-ai-gradient {
+    border-image: linear-gradient(135deg, #4299E0 20.5%, #CA42E0 46.91%, #FF5F46 79.5%) 1;
+  }
+
+  /* DuBois table row states */
+  .row-hover:hover {
+    background-color: rgba(68, 83, 95, 0.04);
+  }
+  .dark .row-hover:hover {
+    background-color: rgba(189, 205, 219, 0.04);
+  }
+  .row-selected {
+    background-color: rgba(68, 83, 95, 0.08);
+  }
+  .dark .row-selected {
+    background-color: rgba(189, 205, 219, 0.08);
+  }
+}
