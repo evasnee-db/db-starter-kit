@@ -609,7 +609,7 @@ function WidgetPreview({ chartType, version, config }: { chartType: string; vers
             <CartesianGrid strokeDasharray="3 3" stroke="#eee" />
             <XAxis dataKey="lap" label={xLabel !== "Lap" ? { value: xLabel, position: "insideBottomRight", fontSize: 8, offset: -4 } : undefined} {...commonAxis} />
             <YAxis {...commonAxis} domain={["auto", "auto"]} />
-            <Tooltip contentStyle={{ fontSize: 10 }} formatter={(_v: unknown, name: string) => [_v, series.find(([k]) => k === name)?.[1] ?? name]} />
+            <Tooltip contentStyle={{ fontSize: 10 }} />
             {series.map(([dk, label], i) => (
               <Area key={dk} type="monotone" dataKey={dk} name={label} stroke={colors[i]} fill={colors[i]} fillOpacity={0.12} strokeWidth={1.5} dot={false} />
             ))}
@@ -695,7 +695,7 @@ function AiPanel({
   const sentInitial = React.useRef(false)
 
   // Answer verification state
-  const [ratings, setRatings]       = React.useState<Record<string, "up" | "down">>({})
+  const [ratings, setRatings]       = React.useState<Record<string, "up" | "down" | "">>({})
   const [flags, setFlags]           = React.useState<Record<string, boolean>>({})
   const [feedbacks, setFeedbacks]   = React.useState<Record<string, string>>({})
   const [sqlOpen, setSqlOpen]       = React.useState<Record<string, boolean>>({})
@@ -775,7 +775,7 @@ function AiPanel({
         return
       }
 
-      const resp = forceWidget
+      const resp: ReturnType<typeof getAiResponse> = forceWidget
         ? (() => {
             const chartType = getChartTypeFromPrompt(p)
             return {
@@ -2045,7 +2045,7 @@ export default function DashboardsPage() {
             </button>
 
             {!editMode ? (
-              <Button variant="outline" size="xs" className="gap-1.5" onClick={enterEditMode}>
+              <Button variant="outline" size="xs" className="gap-1.5" onClick={() => enterEditMode()}>
                 <Pencil size={11} />
                 Edit draft
               </Button>
