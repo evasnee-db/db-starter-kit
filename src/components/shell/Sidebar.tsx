@@ -13,6 +13,7 @@ import {
   Server,
   BarChart2,
   ChevronRight,
+  Home,
 } from "lucide-react"
 import { DbIcon } from "@/components/ui/db-icon"
 import { NewButton } from "./NewButton"
@@ -44,6 +45,7 @@ type NavItem = {
 
 type NavSection = {
   label?: string
+  defaultCollapsed?: boolean
   items: NavItem[]
 }
 
@@ -52,6 +54,7 @@ type NavSection = {
 const NAV_SECTIONS: NavSection[] = [
   {
     items: [
+      { id: "home",        label: "Home",        icon: Home,           href: "/" },
       { id: "workspace",   label: "Workspace",   icon: WorkspacesIcon, href: "/shell" },
       { id: "recents",     label: "Recents",     icon: Clock },
       { id: "catalog",     label: "Catalog",     icon: CatalogIcon },
@@ -66,7 +69,7 @@ const NAV_SECTIONS: NavSection[] = [
       { id: "sql-editor",     label: "SQL Editor",     icon: QueryEditorIcon },
       { id: "queries",        label: "Queries",        icon: QueryIcon },
       { id: "dashboards",     label: "Dashboards",     icon: BarChart2,     href: "/dashboards" },
-      { id: "genie",          label: "Genie",          icon: AssistantIcon, href: "/genie" },
+      { id: "genie",          label: "Genie Chats",    icon: AssistantIcon, href: "/genie" },
       { id: "alerts",         label: "Alerts",         icon: Bell },
       { id: "query-history",  label: "Query History",  icon: History },
       { id: "sql-warehouses", label: "SQL Warehouses", icon: Database },
@@ -81,7 +84,7 @@ const NAV_SECTIONS: NavSection[] = [
     ],
   },
   {
-    label: "Machine Learning",
+    label: "AI/ML",
     items: [
       { id: "playground",  label: "Playground",  icon: FlaskConical },
       { id: "experiments", label: "Experiments", icon: TestTube2 },
@@ -107,8 +110,11 @@ export function Sidebar({
   onNavigate,
   className,
 }: SidebarProps) {
-  // Labelled sections are collapsible; start all expanded
-  const [collapsed, setCollapsed] = React.useState<Record<string, boolean>>({})
+  const [collapsed, setCollapsed] = React.useState<Record<string, boolean>>(() => {
+    const initial: Record<string, boolean> = {}
+    NAV_SECTIONS.forEach((s) => { if (s.label && s.defaultCollapsed) initial[s.label] = true })
+    return initial
+  })
 
   const toggleSection = (label: string) =>
     setCollapsed((prev) => ({ ...prev, [label]: !prev[label] }))

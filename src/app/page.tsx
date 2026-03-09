@@ -2,107 +2,69 @@
 
 import * as React from "react"
 import { useRouter } from "next/navigation"
-import Link from "next/link"
-import { Search, ChevronDown, ArrowUp, ChevronRight, Star } from "lucide-react"
-import { DbIcon } from "@/components/ui/db-icon"
-import { DatabricksLogo } from "@/components/shell/DatabricksLogo"
 import {
-  SparkleIcon,
-  AppIcon,
+  Search, ArrowUp, ChevronRight, Star, ShieldCheck,
+  Upload, AlertTriangle, Activity, MessageSquare, BarChart2,
+  BookOpen, Table2, Cpu, History, Plus, AtSign,
+} from "lucide-react"
+import { AppShell } from "@/components/shell"
+import { DbIcon } from "@/components/ui/db-icon"
+import {
   AssistantIcon,
   CatalogIcon,
-  WorkspacesIcon,
   BarChartIcon,
-  NotebookIcon,
-  StorefrontIcon,
   SpeechBubbleIcon,
+  QueryIcon,
+  PipelineIcon,
   WorkflowsIcon,
-  RobotIcon,
-  ChevronRightIcon,
 } from "@/components/icons"
 import { cn } from "@/lib/utils"
 
 // ─── Data ─────────────────────────────────────────────────────────────────────
 
-const PINNED = [
-  {
-    id: "p1", type: "Dashboard", label: "Dashboard",
-    title: "Supply Chain Optimization",
-    subtitle: "Monitoring dashboard",
-    color: "bg-blue-50",
-    preview: "chart",
-    stats: ["52%", "0.09%"],
-  },
-  {
-    id: "p2", type: "Genie Space", label: "Genie Space",
-    title: "FY26 Campaigns Genie",
-    subtitle: "",
-    color: "bg-purple-50",
-    preview: "genie",
-    stats: [],
-  },
-  {
-    id: "p3", type: "Dashboard", label: "Dashboard",
-    title: "Sales Review",
-    subtitle: "",
-    color: "bg-teal-50",
-    preview: "chart2",
-    stats: [],
-  },
-  {
-    id: "p4", type: "App", label: "App",
-    title: "Forecasting Agent",
-    subtitle: "",
-    color: "bg-green-50",
-    preview: "app",
-    stats: [],
-  },
+const SUGGESTED_ITEMS = [
+  { id: 1,  icon: "dashboard", name: "Sales Supply Chain Optimization", reason: "You viewed · 23 hours ago" },
+  { id: 2,  icon: "dashboard", name: "Sales Pipeline Manager",          reason: "You viewed · 22 hours ago" },
+  { id: 3,  icon: "genie",     name: "User Experience Assessment",      reason: "Trending" },
+  { id: 4,  icon: "dashboard", name: "Sales Supply Chain Optimization", reason: "You viewed · 21 hours ago" },
+  { id: 5,  icon: "genie",     name: "User Experience Assessment",      reason: "You view frequently" },
+  { id: 6,  icon: "dashboard", name: "Sales Pipeline Manager",          reason: "Trending" },
+  { id: 7,  icon: "dashboard", name: "Sales Supply Chain Optimization", reason: "You viewed · 20 hours ago" },
+  { id: 8,  icon: "genie",     name: "User Experience Assessment",      reason: "You view frequently" },
+  { id: 9,  icon: "dashboard", name: "Sales Supply Chain Optimization", reason: "Shared with you · 1 day ago" },
+  { id: 10, icon: "dashboard", name: "Customer Feedback in Sales Metrics", reason: "You viewed · 18 hours ago" },
 ]
 
-const FOR_YOU_ITEMS = [
-  { id: 1, icon: "dashboard", name: "Sales Supply Chain Optimization", reason: "You viewed · 23 hours ago" },
-  { id: 2, icon: "dashboard", name: "Sales Pipeline Manager",          reason: "You viewed · 22 hours ago" },
-  { id: 3, icon: "genie",     name: "User Experience Assessment",      reason: "Trending" },
-  { id: 4, icon: "dashboard", name: "Sales Supply Chain Optimization", reason: "You viewed · 21 hours ago" },
-  { id: 5, icon: "genie",     name: "User Experience Assessment",      reason: "You view frequently" },
-  { id: 6, icon: "dashboard", name: "Sales Pipeline Manager",          reason: "Trending" },
-  { id: 7, icon: "dashboard", name: "Sales Supply Chain Optimization", reason: "You viewed · 20 hours ago" },
-  { id: 8, icon: "genie",     name: "User Experience Assessment",      reason: "You view frequently" },
-  { id: 9, icon: "dashboard", name: "Sales Supply Chain Optimization", reason: "Shared with you · 1 day ago" },
-  { id: 10,icon: "dashboard", name: "Customer Feedback in Sales Me...", reason: "You viewed · 18 hours ago" },
-]
-
-const TRENDING = [
-  { id: 1, icon: "genie",     name: "FY26 Marketing Genie",    author: "Marketing Team",  time: "Today" },
-  { id: 2, icon: "dashboard", name: "Restaurant Sales",        author: "Atira Richards",  time: "1 day ago" },
-  { id: 3, icon: "dashboard", name: "Produce Supply Chain",    author: "Hector Cruz",     time: "5 days ago" },
-  { id: 4, icon: "genie",     name: "Kitchen Sales",           author: "Sales Team",      time: "1 week ago" },
-  { id: 5, icon: "dashboard", name: "Quarterly Projections",   author: "Surya Patel",     time: "2 weeks ago" },
+const ALERTS = [
+  { id: 1, type: "error",   title: "Pipeline failed",        source: "Marketing Team", time: "Today" },
+  { id: 2, type: "warning", title: "Quality Rule Violated",  source: "Atira Richards", time: "1 day ago" },
+  { id: 3, type: "drift",   title: "Model drift detected",   source: "Hector Cruz",    time: "5 days ago" },
+  { id: 4, type: "comment", title: "New notebook comment",   source: "Sales Team",     time: "1 week ago" },
 ]
 
 const DOMAINS = [
   {
-    id: "d1", name: "Marketing", type: "Domain", verified: true,
+    id: "d1", name: "Marketing", verified: true,
     color: "bg-green-100", iconColor: "text-green-700",
-    desc: "Data, dashboards, and tools for tracking campaigns, analyzing pipeline impact, and...",
+    desc: "Data, dashboards, and tools for tracking campaigns, analyzing pipeline impact, and measuring ROI.",
     queries: "18.4k", assets: "42 certified assets", users: "320 active users",
   },
   {
-    id: "d2", name: "Finance", type: "Domain", verified: true,
+    id: "d2", name: "Finance", verified: true,
     color: "bg-blue-100", iconColor: "text-blue-700",
-    desc: "Core financial reporting, budgeting, forecasting, and spend analysis across busi...",
+    desc: "Core financial reporting, budgeting, forecasting, and spend analysis across business units.",
     queries: "22.7k", assets: "38 certified assets", users: "280 active users",
   },
   {
-    id: "d3", name: "Supply Chain & Logistics", type: "Domain", verified: false,
+    id: "d3", name: "Supply Chain & Logistics", verified: false,
     color: "bg-red-100", iconColor: "text-red-600",
     desc: "Data on inventory, shipments, suppliers, and fulfillment to optimize global operations.",
     queries: "14.6k", assets: "33 certified assets", users: "210 active users",
   },
   {
-    id: "d4", name: "Retail & Commerce", type: "Domain", verified: false,
+    id: "d4", name: "Retail & Commerce", verified: false,
     color: "bg-blue-100", iconColor: "text-blue-700",
-    desc: "Point-of-sale, e-commerce, and merchandising data for understanding cust...",
+    desc: "Point-of-sale, e-commerce, and merchandising data for understanding customers.",
     queries: "102k", assets: "47 certified assets", users: "250 active users",
   },
 ]
@@ -115,46 +77,22 @@ function ItemIcon({ type }: { type: string }) {
   return <BarChartIcon size={14} className="text-primary" />
 }
 
-function TypeBadge({ type }: { type: string }) {
-  const map: Record<string, string> = {
-    Dashboard:    "bg-blue-100 text-blue-700",
-    "Genie Space":"bg-purple-100 text-purple-700",
-    App:          "bg-green-100 text-green-700",
-    Domain:       "bg-secondary text-muted-foreground",
-  }
-  return (
-    <span className={cn("rounded px-1.5 py-0.5 text-[10px] font-semibold", map[type] ?? "bg-secondary text-muted-foreground")}>
-      {type}
-    </span>
-  )
+function AlertIcon({ type }: { type: string }) {
+  if (type === "error")
+    return <div className="flex h-5 w-5 items-center justify-center rounded-full bg-red-50"><AlertTriangle size={11} className="text-red-500" /></div>
+  if (type === "warning")
+    return <div className="flex h-5 w-5 items-center justify-center rounded-full bg-amber-50"><BarChart2 size={11} className="text-amber-500" /></div>
+  if (type === "drift")
+    return <div className="flex h-5 w-5 items-center justify-center rounded-full bg-green-50"><Activity size={11} className="text-green-600" /></div>
+  return <div className="flex h-5 w-5 items-center justify-center rounded-full bg-blue-50"><MessageSquare size={11} className="text-blue-500" /></div>
 }
 
-// Mini chart preview SVGs for pinned cards
-function MiniPreview({ type }: { type: string }) {
-  if (type === "chart") return (
-    <svg viewBox="0 0 120 60" className="w-full h-full opacity-70">
-      <polyline points="0,50 20,35 40,45 60,20 80,30 100,10 120,25" fill="none" stroke="#2272B4" strokeWidth="2"/>
-      <polyline points="0,55 20,50 40,52 60,40 80,45 100,35 120,42" fill="none" stroke="#1B8A78" strokeWidth="1.5"/>
-    </svg>
-  )
-  if (type === "chart2") return (
-    <svg viewBox="0 0 120 60" className="w-full h-full opacity-70">
-      <rect x="5"  y="20" width="16" height="40" fill="#2272B4" opacity="0.7" rx="1"/>
-      <rect x="25" y="10" width="16" height="50" fill="#1B8A78" opacity="0.7" rx="1"/>
-      <rect x="45" y="30" width="16" height="30" fill="#D4A017" opacity="0.7" rx="1"/>
-      <rect x="65" y="15" width="16" height="45" fill="#2272B4" opacity="0.5" rx="1"/>
-      <rect x="85" y="25" width="16" height="35" fill="#1B8A78" opacity="0.5" rx="1"/>
-    </svg>
-  )
-  if (type === "genie") return (
-    <div className="flex h-full w-full items-center justify-center">
-      <DbIcon icon={AssistantIcon} color="ai" size={28} />
-    </div>
-  )
+function CertifiedBadge() {
   return (
-    <div className="flex h-full w-full items-center justify-center">
-      <RobotIcon size={28} className="text-green-600 opacity-60" />
-    </div>
+    <span className="inline-flex items-center gap-0.5 rounded px-1 py-0.5 text-[10px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
+      <ShieldCheck size={9} className="shrink-0" />
+      Certified
+    </span>
   )
 }
 
@@ -163,165 +101,157 @@ function MiniPreview({ type }: { type: string }) {
 export default function HomePage() {
   const router = useRouter()
   const [query, setQuery] = React.useState("")
-  const [activeFilter, setActiveFilter] = React.useState("all")
-  const [activeTab, setActiveTab] = React.useState("foryou")
+  const [activeTab, setActiveTab] = React.useState("suggested")
+  const [searchMode, setSearchMode] = React.useState<"search" | "ask">("search")
 
   const handleSearch = (q = query) => {
     if (q.trim()) router.push(`/genie?q=${encodeURIComponent(q.trim())}`)
   }
 
-  const filters = [
-    { id: "all",     label: "Domains",      icon: WorkspacesIcon },
-    { id: "dash",    label: "Dashboards",   icon: BarChartIcon },
-    { id: "genie",   label: "Genie Spaces", icon: AssistantIcon },
-    { id: "apps",    label: "Apps",         icon: StorefrontIcon },
-  ]
-
   return (
-    <div className="min-h-screen bg-[#F6F7F9] flex flex-col">
-
-      {/* ── Top bar ──────────────────────────────────────────────────────── */}
-      <header className="flex h-12 shrink-0 items-center justify-between bg-[#F6F7F9] px-4">
-        <DatabricksLogo height={18} />
-        <div className="flex items-center gap-1">
-          <button className="flex items-center gap-1.5 rounded px-2 py-1 text-xs text-muted-foreground hover:bg-muted-foreground/10 transition-colors">
-            Cutting Edge <ChevronDown size={12} />
-          </button>
-          <button className="flex h-8 w-8 items-center justify-center rounded hover:bg-muted-foreground/10 transition-colors">
-            <AppIcon size={16} className="text-muted-foreground" />
-          </button>
-          <button className="ml-1 flex h-7 w-7 items-center justify-center rounded-full bg-primary text-[11px] font-semibold text-white">
-            N
-          </button>
-        </div>
-      </header>
+    <AppShell activeItem="home">
+    <div className="flex-1 overflow-y-auto bg-white">
 
       {/* ── Hero ─────────────────────────────────────────────────────────── */}
-      <section className="flex flex-col items-center gap-5 px-4 pt-12 pb-8">
-        <h1 className="text-2xl font-semibold text-foreground tracking-tight">
+      <section className="flex flex-col items-center gap-4 px-4 pt-12 pb-8">
+        <h1 className="text-[26px] font-semibold text-[#111] tracking-[-0.02em]">
           What would you like to know?
         </h1>
 
-        {/* Search bar */}
-        <div className="w-full max-w-[600px]">
-          <div className="flex items-center gap-0 rounded-lg border border-border bg-background shadow-[var(--shadow-db-sm)] overflow-hidden">
-            {/* Search side */}
-            <button
-              onClick={() => handleSearch()}
-              className="flex items-center gap-2 border-r border-border px-4 py-2.5 text-xs text-muted-foreground hover:bg-secondary transition-colors whitespace-nowrap"
-            >
-              <Search size={13} /> Search
-            </button>
-
-            {/* Input */}
+        <div className="w-full max-w-[580px] flex flex-col">
+          {/* Search box — unified card */}
+          <div className="rounded-xl border border-[#e0e0e0] bg-white shadow-[0_2px_12px_rgba(0,0,0,0.07)] focus-within:shadow-[0_4px_20px_rgba(0,0,0,0.10)] focus-within:border-[#c8c8c8] transition-all overflow-hidden">
+            {/* Input row */}
             <input
               autoFocus
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               onKeyDown={(e) => { if (e.key === "Enter") handleSearch() }}
-              placeholder="Search Dashboards, Genie spaces, and Apps"
-              className="flex-1 bg-transparent px-3 py-2.5 text-xs text-foreground outline-none placeholder:text-muted-foreground/60"
+              placeholder={searchMode === "ask" ? "Ask anything..." : "Search for anything..."}
+              className="w-full bg-transparent px-4 pt-3.5 pb-2 text-[13.5px] text-[#111] outline-none placeholder:text-[#bbb]"
             />
 
-            {/* Ask side */}
-            <button
-              onClick={() => handleSearch()}
-              className="flex items-center gap-2 border-l border-border px-4 py-2.5 text-xs text-muted-foreground hover:bg-secondary transition-colors whitespace-nowrap"
-            >
-              <SpeechBubbleIcon size={13} /> Ask
-            </button>
+            {/* Bottom action row */}
+            <div className="flex items-center justify-between px-3 pb-3">
+              <div className="flex items-center gap-1">
+                {/* Search toggle */}
+                <button
+                  onClick={() => setSearchMode("search")}
+                  className={cn(
+                    "flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-[12px] font-medium transition-all",
+                    searchMode === "search"
+                      ? "border-[#d0d0d0] bg-white text-[#111] shadow-[0_1px_4px_rgba(0,0,0,0.10)]"
+                      : "border-transparent text-[#888] hover:border-[#e8e8e8] hover:text-[#555]"
+                  )}
+                >
+                  <Search size={11} strokeWidth={2.2} /> Search
+                </button>
+                {/* Ask toggle */}
+                <button
+                  onClick={() => setSearchMode("ask")}
+                  className={cn(
+                    "flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-[12px] font-medium transition-all",
+                    searchMode === "ask"
+                      ? "border-[#d0d0d0] bg-white text-[#111] shadow-[0_1px_4px_rgba(0,0,0,0.10)]"
+                      : "border-transparent text-[#888] hover:border-[#e8e8e8] hover:text-[#555]"
+                  )}
+                >
+                  <SpeechBubbleIcon size={11} /> Ask
+                </button>
+                {/* Ask-mode extras: @ and + */}
+                {searchMode === "ask" && (
+                  <>
+                    <button className="flex h-7 w-7 items-center justify-center rounded-full border border-transparent text-[#aaa] hover:border-[#e8e8e8] hover:text-[#555] transition-all">
+                      <AtSign size={13} strokeWidth={2} />
+                    </button>
+                    <button className="flex h-7 w-7 items-center justify-center rounded-full border border-transparent text-[#aaa] hover:border-[#e8e8e8] hover:text-[#555] transition-all">
+                      <Plus size={13} strokeWidth={2} />
+                    </button>
+                  </>
+                )}
+              </div>
 
-            {/* Submit */}
-            <button
-              onClick={() => handleSearch()}
-              className={cn(
-                "flex h-full items-center justify-center px-3 transition-colors",
-                query.trim() ? "text-primary hover:bg-primary/5" : "text-muted-foreground/30"
-              )}
-            >
-              <ArrowUp size={14} />
-            </button>
+              {/* Send button */}
+              <button
+                onClick={() => handleSearch()}
+                className={cn(
+                  "flex h-7 w-7 shrink-0 items-center justify-center rounded-full transition-all",
+                  query.trim()
+                    ? "bg-[#111] text-white shadow-sm hover:bg-[#333]"
+                    : "bg-[#f0f0f0] text-[#bbb] cursor-default"
+                )}
+              >
+                <ArrowUp size={13} strokeWidth={2.2} />
+              </button>
+            </div>
           </div>
-        </div>
 
-        {/* Filter tabs */}
-        <div className="flex items-center gap-1">
-          {filters.map((f) => (
+          {/* ── Below-box: Quick actions (Search) or Suggested questions (Ask) ── */}
+          {searchMode === "search" ? (
+            <div className="flex items-center gap-2 flex-wrap justify-center mt-3">
+          {[
+            { label: "Notebooks",  icon: BookOpen,    href: null         },
+            { label: "Tables",     icon: Table2,      href: null         },
+            { label: "Jobs",       icon: Cpu,         href: null         },
+            { label: "Dashboards", icon: BarChart2,   href: "/dashboards"},
+          ].map(({ label, icon: Icon, href }) => (
             <button
-              key={f.id}
-              onClick={() => setActiveFilter(f.id)}
-              className={cn(
-                "flex items-center gap-1.5 rounded px-3 py-1.5 text-xs transition-colors",
-                activeFilter === f.id
-                  ? "bg-background text-foreground font-semibold shadow-[var(--shadow-db-sm)] border border-border"
-                  : "text-muted-foreground hover:bg-muted-foreground/10"
-              )}
+              key={label}
+              onClick={() => { if (href) router.push(href) }}
+              className="flex items-center gap-1.5 rounded-full border border-[#e0e0e0] bg-white px-3.5 py-1.5 text-[12.5px] text-[#444] shadow-[0_1px_3px_rgba(0,0,0,0.06)] hover:border-[#ccc] hover:shadow-[0_2px_6px_rgba(0,0,0,0.09)] hover:text-[#111] transition-all"
             >
-              <f.icon size={13} className={activeFilter === f.id ? "text-primary" : "text-muted-foreground"} />
-              {f.label}
+              <Icon size={12} className="text-[#666] shrink-0" strokeWidth={1.8} />
+              {label}
             </button>
           ))}
+            </div>
+          ) : (
+            <div className="mt-1 flex flex-col">
+              {[
+                "How are FY26 campaigns performing compared to FY25?",
+                "Which campaigns have generated the most pipeline so far?",
+                "Which regions are contributing the most leads for FY26 campaigns?",
+                "What's the average deal size for opportunities tied to campaigns?",
+                "Where are we seeing the lowest conversion rates in the funnel?",
+              ].map((q, i) => (
+                <button
+                  key={i}
+                  onClick={() => { setQuery(q); handleSearch(q) }}
+                  className="group flex items-center gap-3 border-b border-[#f0f0f0] py-3 text-left text-[13px] text-[#555] hover:text-[#111] transition-colors last:border-0"
+                >
+                  <History size={14} className="shrink-0 text-[#ccc] group-hover:text-[#aaa] transition-colors" strokeWidth={1.8} />
+                  {q}
+                </button>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 
       {/* ── Main content ─────────────────────────────────────────────────── */}
-      <div className="mx-auto w-full max-w-[960px] flex-1 px-4 pb-12">
+      <div className="mx-auto w-full max-w-[960px] px-6 pb-12">
 
-        {/* Pinned */}
-        <section className="mb-8">
-          <h2 className="mb-3 text-sm font-semibold text-foreground">Pinned</h2>
-          <div className="grid grid-cols-4 gap-3">
-            {PINNED.map((item) => (
-              <div
-                key={item.id}
-                className="flex flex-col overflow-hidden rounded-md border border-border bg-background shadow-[var(--shadow-db-sm)] cursor-pointer hover:shadow-[var(--shadow-db-lg)] transition-shadow"
-              >
-                {/* Preview area */}
-                <div className={cn("h-[90px] w-full p-3", item.color)}>
-                  <MiniPreview type={item.preview} />
-                </div>
-                {/* Info */}
-                <div className="flex flex-col gap-1 p-3">
-                  <div className="flex items-center gap-1">
-                    <TypeBadge type={item.type} />
-                    <Star size={10} className="ml-auto text-muted-foreground/40 hover:text-yellow-400 transition-colors" />
-                  </div>
-                  <p className="text-xs font-semibold text-foreground leading-snug">{item.title}</p>
-                  {item.subtitle && <p className="text-[11px] text-muted-foreground">{item.subtitle}</p>}
-                  {item.stats.length > 0 && (
-                    <div className="flex items-center gap-2 mt-1">
-                      {item.stats.map((s, i) => (
-                        <span key={i} className="text-[11px] font-semibold text-foreground">{s}</span>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
+        {/* Two-column: Suggested list + right panel */}
+        <div className="grid grid-cols-[1fr_268px] gap-6 mb-10">
 
-        {/* Two-column section */}
-        <div className="grid grid-cols-[1fr_280px] gap-6 mb-8">
-
-          {/* Left: For you list */}
-          <div className="flex flex-col rounded-md border border-border bg-background shadow-[var(--shadow-db-sm)] overflow-hidden">
+          {/* Left: Suggested / Recents / Favorites / Shared */}
+          <div className="flex flex-col overflow-hidden rounded-lg border border-[#e8e8e8] bg-white">
             {/* Tabs */}
-            <div className="flex border-b border-border">
+            <div className="flex border-b border-[#e8e8e8]">
               {[
-                { id: "foryou",    label: "For you" },
-                { id: "recents",   label: "Recents" },
-                { id: "favorites", label: "Favorites" },
-                { id: "shared",    label: "Shared" },
+                { id: "suggested",  label: "Suggested" },
+                { id: "recents",    label: "Recents" },
+                { id: "favorites",  label: "Favorites" },
+                { id: "shared",     label: "Shared" },
               ].map((t) => (
                 <button
                   key={t.id}
                   onClick={() => setActiveTab(t.id)}
                   className={cn(
-                    "border-b-2 px-4 py-2.5 text-xs transition-colors",
+                    "border-b-2 px-4 py-2.5 text-[13px] transition-colors",
                     activeTab === t.id
-                      ? "border-primary text-primary font-semibold"
-                      : "border-transparent text-muted-foreground hover:text-foreground"
+                      ? "border-[#1c1c1c] text-[#1c1c1c] font-medium"
+                      : "border-transparent text-[#666] hover:text-[#1c1c1c]"
                   )}
                 >
                   {t.label}
@@ -330,142 +260,201 @@ export default function HomePage() {
             </div>
 
             {/* Table header */}
-            <div className="grid grid-cols-[1fr_180px] border-b border-border px-4 py-2">
-              <span className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wide">Name</span>
-              <span className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wide">Reason suggested</span>
+            <div className="grid grid-cols-[1fr_190px] border-b border-[#e8e8e8] px-4 py-2">
+              <span className="text-[11px] font-medium text-[#999] uppercase tracking-wide">Name</span>
+              <span className="text-[11px] font-medium text-[#999] uppercase tracking-wide">Reason suggested</span>
             </div>
 
             {/* Rows */}
-            {FOR_YOU_ITEMS.map((item) => (
+            {SUGGESTED_ITEMS.map((item) => (
               <div
                 key={item.id}
-                className="grid grid-cols-[1fr_180px] items-center border-b border-border px-4 py-2.5 last:border-0 hover:bg-secondary cursor-pointer transition-colors"
+                onClick={() => item.icon === "dashboard" ? router.push("/dashboards") : router.push("/genie")}
+                className="grid grid-cols-[1fr_190px] items-center border-b border-[#f0f0f0] px-4 py-2.5 last:border-0 hover:bg-[#f8f8f8] cursor-pointer transition-colors"
               >
-                <div className="flex items-center gap-2 min-w-0">
+                <div className="flex items-center gap-2.5 min-w-0">
                   <ItemIcon type={item.icon} />
-                  <span className="truncate text-xs text-foreground">{item.name}</span>
+                  <span className="truncate text-[13px] text-[#1c1c1c]">{item.name}</span>
                 </div>
-                <span className="text-xs text-muted-foreground">{item.reason}</span>
+                <span className="text-[12px] text-[#888]">{item.reason}</span>
               </div>
             ))}
           </div>
 
-          {/* Right: What's new + Trending */}
+          {/* Right column */}
           <div className="flex flex-col gap-4">
 
-            {/* What's new */}
-            <div className="rounded-md border border-border bg-background shadow-[var(--shadow-db-sm)] overflow-hidden">
-              <div className="flex items-center justify-between border-b border-border px-4 py-2.5">
-                <span className="text-xs font-semibold text-foreground">What&apos;s new</span>
-                <button className="flex items-center gap-0.5 text-[11px] text-primary hover:underline">
-                  <ChevronRight size={12} />
+            {/* Alerts */}
+            <div className="flex flex-col overflow-hidden rounded-lg border border-[#e8e8e8] bg-white">
+              <div className="flex items-center justify-between border-b border-[#e8e8e8] px-4 py-2.5">
+                <button className="flex items-center gap-0.5 text-[13px] font-medium text-[#1c1c1c] hover:text-primary transition-colors">
+                  Alerts <ChevronRight size={13} className="text-[#aaa]" />
                 </button>
               </div>
-              <div className="p-3">
-                <div className="rounded border border-border bg-secondary p-3">
-                  <p className="mb-1 text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">Community Highlight</p>
-                  <p className="text-xs font-semibold text-foreground leading-snug mb-2">
-                    Explore Apps from the Databricks Appathon
-                  </p>
-                  {/* Fake app screenshots */}
-                  <div className="mb-3 grid grid-cols-2 gap-1.5">
-                    <div className="h-16 rounded bg-gradient-to-br from-blue-100 to-blue-200 flex items-center justify-center">
-                      <BarChartIcon size={20} className="text-blue-500 opacity-60" />
-                    </div>
-                    <div className="flex flex-col gap-1.5">
-                      <div className="h-7 rounded bg-gradient-to-br from-green-100 to-teal-100 flex items-center justify-center">
-                        <WorkflowsIcon size={12} className="text-teal-600 opacity-60" />
-                      </div>
-                      <div className="h-7 rounded bg-gradient-to-br from-purple-100 to-pink-100 flex items-center justify-center">
-                        <RobotIcon size={12} className="text-purple-500 opacity-60" />
-                      </div>
+              <div className="flex flex-col px-4 py-2">
+                {ALERTS.map((alert, i) => (
+                  <div
+                    key={alert.id}
+                    className={cn(
+                      "flex items-start gap-2.5 py-2.5 cursor-pointer hover:opacity-80 transition-opacity",
+                      i < ALERTS.length - 1 && "border-b border-[#f0f0f0]"
+                    )}
+                  >
+                    <AlertIcon type={alert.type} />
+                    <div className="flex flex-col min-w-0">
+                      <span className="text-[12.5px] font-medium text-[#1c1c1c] leading-snug">{alert.title}</span>
+                      <span className="text-[11px] text-[#999]">From {alert.source} · {alert.time}</span>
                     </div>
                   </div>
-                  <button className="w-full rounded border border-border bg-background py-1.5 text-xs font-semibold text-foreground hover:bg-muted-foreground/5 transition-colors">
-                    Browse winning apps
+                ))}
+                <button className="py-2 text-left text-[12px] text-primary hover:underline">
+                  See more
+                </button>
+              </div>
+            </div>
+
+            {/* Start something new */}
+            <div className="flex flex-col overflow-hidden rounded-lg border border-[#e8e8e8] bg-white">
+              <div className="border-b border-[#e8e8e8] px-4 py-2.5">
+                <span className="text-[13px] font-medium text-[#1c1c1c]">Start something new</span>
+              </div>
+              <div className="grid grid-cols-2 gap-2 p-3">
+                {[
+                  { label: "Upload data",   icon: Upload,     href: null },
+                  { label: "Query",         icon: QueryIcon,  href: null },
+                  { label: "Dashboard",     icon: BarChartIcon, href: "/dashboards" },
+                  { label: "Pipeline",      icon: PipelineIcon, href: null },
+                  { label: "Notebook",      icon: BookOpen,   href: null, wide: true },
+                ].map(({ label, icon: Icon, href, wide }) => (
+                  <button
+                    key={label}
+                    onClick={() => href ? router.push(href) : undefined}
+                    className={cn(
+                      "flex items-center gap-2 rounded-md border border-[#e8e8e8] bg-[#fafafa] px-3 py-2.5 text-left text-[12px] text-[#444] hover:bg-[#f2f2f2] transition-colors",
+                      wide && "col-span-2"
+                    )}
+                  >
+                    <Icon size={13} className="text-[#777] shrink-0" />
+                    {label}
                   </button>
-                  {/* Carousel dots */}
-                  <div className="mt-2.5 flex justify-center gap-1">
-                    {[0,1,2,3].map((i) => (
-                      <span key={i} className={cn("h-1.5 w-1.5 rounded-full", i === 0 ? "bg-primary" : "bg-border")} />
+                ))}
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        {/* What's new */}
+        <section className="mb-8">
+          <button className="mb-3 flex items-center gap-0.5 text-[13px] font-medium text-[#1c1c1c] hover:text-primary transition-colors">
+            What&apos;s new <ChevronRight size={13} className="text-[#aaa]" />
+          </button>
+          <div
+            className="relative flex overflow-hidden rounded-xl"
+            style={{ background: "linear-gradient(135deg, #FDE68A 0%, #FCD34D 40%, #FBBF24 70%, #F59E0B 100%)", minHeight: 180 }}
+          >
+            {/* Left content */}
+            <div className="flex flex-col justify-between p-6 w-[320px] shrink-0 z-10">
+              <div className="flex flex-col gap-2">
+                <span className="text-[10px] font-bold uppercase tracking-widest text-amber-800/70">New App</span>
+                <div className="flex items-center gap-2">
+                  <div className="flex h-7 w-7 items-center justify-center rounded-full bg-[#F97316] shadow-sm">
+                    <span className="text-[10px] font-bold text-white leading-none">db</span>
+                  </div>
+                  <span className="text-[15px] font-semibold text-[#1c1c1c]">Databricks One</span>
+                </div>
+                <p className="text-[12px] text-[#444] leading-relaxed">
+                  Databricks One brings a modern, simplified experience built for business users.
+                </p>
+              </div>
+              <button className="mt-4 w-fit rounded-lg bg-white px-4 py-1.5 text-[12px] font-medium text-[#1c1c1c] shadow-sm hover:bg-white/90 transition-colors">
+                Get started
+              </button>
+            </div>
+
+            {/* Right: UI preview mockup */}
+            <div className="flex flex-1 items-center justify-end pr-6 py-4">
+              <div className="rounded-xl border border-white/40 bg-white/80 shadow-xl w-[340px] overflow-hidden backdrop-blur-sm">
+                {/* Mock browser bar */}
+                <div className="flex items-center gap-1.5 border-b border-[#eee] px-3 py-2">
+                  <span className="h-2 w-2 rounded-full bg-[#FF5F57]" />
+                  <span className="h-2 w-2 rounded-full bg-[#FEBC2E]" />
+                  <span className="h-2 w-2 rounded-full bg-[#28C840]" />
+                </div>
+                {/* Mock content */}
+                <div className="flex flex-col items-center gap-2.5 px-6 py-4">
+                  <p className="text-[11px] font-medium text-[#1c1c1c]">What would you like to know?</p>
+                  <div className="w-full rounded-md border border-[#e0e0e0] bg-[#f9f9f9] px-3 py-1.5">
+                    <span className="text-[10px] text-[#bbb]">Search for anything...</span>
+                  </div>
+                  <div className="grid w-full grid-cols-3 gap-1.5">
+                    {["#dbeafe","#dcfce7","#fce7f3"].map((c,i) => (
+                      <div key={i} className="h-8 rounded-md" style={{ backgroundColor: c }} />
+                    ))}
+                  </div>
+                  <div className="w-full rounded-md border border-[#e8e8e8] bg-white">
+                    {[0,1,2].map(i => (
+                      <div key={i} className="flex items-center gap-2 border-b border-[#f0f0f0] px-2 py-1.5 last:border-0">
+                        <div className="h-2 w-2 rounded-full bg-[#ddd]" />
+                        <div className="h-1.5 flex-1 rounded-full bg-[#f0f0f0]" />
+                        <div className="h-1.5 w-12 rounded-full bg-[#f0f0f0]" />
+                      </div>
                     ))}
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* Trending */}
-            <div className="rounded-md border border-border bg-background shadow-[var(--shadow-db-sm)] overflow-hidden">
-              <div className="flex items-center justify-between border-b border-border px-4 py-2.5">
-                <span className="text-xs font-semibold text-foreground">Trending</span>
-                <button className="flex items-center gap-0.5 text-[11px] text-primary hover:underline">
-                  <ChevronRight size={12} />
-                </button>
-              </div>
-              <div className="flex flex-col">
-                {TRENDING.map((item, i) => (
-                  <div
-                    key={item.id}
-                    className={cn(
-                      "flex items-start gap-2 px-4 py-2.5 hover:bg-secondary cursor-pointer transition-colors",
-                      i < TRENDING.length - 1 && "border-b border-border"
-                    )}
-                  >
-                    <ItemIcon type={item.icon} />
-                    <div className="flex flex-col min-w-0">
-                      <span className="truncate text-xs font-semibold text-foreground">{item.name}</span>
-                      <span className="text-[11px] text-muted-foreground">
-                        From {item.author} · {item.time}
-                      </span>
-                    </div>
-                  </div>
-                ))}
-                <button className="px-4 py-2 text-left text-xs text-primary hover:underline">
-                  See more
-                </button>
-              </div>
+            {/* Dots */}
+            <div className="absolute bottom-3 left-0 right-0 flex justify-center gap-1.5">
+              {[0,1,2].map(i => (
+                <span key={i} className={cn("h-1.5 rounded-full transition-all", i === 0 ? "w-4 bg-amber-800/50" : "w-1.5 bg-amber-800/25")} />
+              ))}
             </div>
           </div>
-        </div>
+        </section>
 
         {/* Your top domains */}
         <section>
-          <div className="mb-3 flex items-center gap-1">
-            <h2 className="text-sm font-semibold text-foreground">Your top domains</h2>
-            <button className="text-muted-foreground hover:text-foreground transition-colors">
-              <ChevronRight size={14} />
-            </button>
-          </div>
+          <button className="mb-3 flex items-center gap-0.5 text-[13px] font-medium text-[#1c1c1c] hover:text-primary transition-colors">
+            Your top domains <ChevronRight size={13} className="text-[#aaa]" />
+          </button>
           <div className="grid grid-cols-2 gap-3">
             {DOMAINS.map((d) => (
               <div
                 key={d.id}
-                className="flex gap-3 rounded-md border border-border bg-background p-4 shadow-[var(--shadow-db-sm)] hover:shadow-[var(--shadow-db-lg)] cursor-pointer transition-shadow"
+                className="flex gap-3 rounded-lg border border-[#e8e8e8] bg-white p-4 hover:border-[#ccc] hover:shadow-sm cursor-pointer transition-all"
               >
-                <div className={cn("flex h-9 w-9 shrink-0 items-center justify-center rounded-md", d.color)}>
-                  <CatalogIcon size={18} className={d.iconColor} />
+                <div className={cn("flex h-9 w-9 shrink-0 items-center justify-center rounded-lg", d.color)}>
+                  <CatalogIcon size={17} className={d.iconColor} />
                 </div>
-                <div className="flex flex-col gap-1 min-w-0">
-                  <div className="flex items-center gap-1.5">
-                    <span className="text-xs font-semibold text-foreground truncate">{d.name}</span>
-                    <TypeBadge type={d.type} />
-                    {d.verified && <span className="text-[10px] text-muted-foreground">✓</span>}
-                    <Star size={10} className="ml-auto shrink-0 text-muted-foreground/40 hover:text-yellow-400 transition-colors" />
+                <div className="flex flex-col gap-0.5 min-w-0">
+                  <div className="flex items-center gap-1.5 flex-wrap">
+                    <span className="text-[13px] font-medium text-[#1c1c1c] truncate">{d.name}</span>
+                    <span className="text-[11px] text-[#888] font-normal">Domain</span>
+                    {d.verified && (
+                      <span className="inline-flex items-center gap-0.5 text-[10px] text-[#888]">
+                        <ShieldCheck size={9} className="text-[#aaa]" />
+                      </span>
+                    )}
+                    <Star size={11} className="ml-auto shrink-0 text-[#ddd] hover:text-yellow-400 transition-colors" />
                   </div>
-                  <p className="text-[11px] text-muted-foreground leading-snug line-clamp-2">{d.desc}</p>
-                  <div className="flex items-center gap-2 mt-0.5">
-                    <span className="text-[11px] text-muted-foreground">{d.queries} queries</span>
-                    <span className="text-muted-foreground/30">·</span>
-                    <span className="text-[11px] text-muted-foreground">{d.assets}</span>
-                    <span className="text-muted-foreground/30">·</span>
-                    <span className="text-[11px] text-muted-foreground">{d.users}</span>
+                  <p className="text-[11.5px] text-[#888] leading-snug line-clamp-2 mt-0.5">{d.desc}</p>
+                  <div className="flex items-center gap-1.5 mt-1.5 flex-wrap">
+                    <span className="text-[11px] text-[#aaa]">{d.queries} queries</span>
+                    <span className="text-[#ddd]">·</span>
+                    <span className="text-[11px] text-[#aaa]">{d.assets}</span>
+                    <span className="text-[#ddd]">·</span>
+                    <span className="text-[11px] text-[#aaa]">{d.users}</span>
                   </div>
                 </div>
               </div>
             ))}
           </div>
         </section>
+
       </div>
     </div>
+    </AppShell>
   )
 }

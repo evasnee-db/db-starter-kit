@@ -1,14 +1,11 @@
 "use client"
 
 import * as React from "react"
-import { Search, ChevronDown } from "lucide-react"
+import { ChevronDown } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { DbIcon } from "@/components/ui/db-icon"
 import {
   SidebarCollapseIcon,
   SidebarExpandIcon,
-  SparkleIcon,
   AppIcon,
 } from "@/components/icons"
 import Link from "next/link"
@@ -58,20 +55,7 @@ export function TopBar({
         <Link href="/"><DatabricksLogo height={18} /></Link>
       </div>
 
-      {/* Center: search */}
-      <div className="flex flex-1 justify-center px-4">
-        <div className="relative flex w-full max-w-[480px] items-center">
-          <Search className="absolute left-3 h-4 w-4 text-muted-foreground pointer-events-none" />
-          <Input
-            className="h-8 rounded bg-background border-border pl-9 pr-14 text-xs placeholder:text-muted-foreground"
-            placeholder="Search data, notebooks, recents, and more..."
-          />
-          <kbd className="pointer-events-none absolute right-3 flex items-center gap-0.5 text-[11px] text-muted-foreground">
-            <span>⌘</span>
-            <span>P</span>
-          </kbd>
-        </div>
-      </div>
+      <div className="flex-1" />
 
       {/* Right: workspace selector + icon buttons + avatar */}
       <div className="flex items-center gap-0.5">
@@ -80,15 +64,44 @@ export function TopBar({
           <ChevronDown className="h-3 w-3 text-muted-foreground" />
         </Button>
 
-        <Button
-          variant="ghost"
-          size="icon-sm"
-          aria-label="AI Assistant"
+        {/* Ask Genie pill button */}
+        <button
           onClick={onAiClick}
-          className={aiActive ? "bg-secondary" : ""}
+          aria-label="Ask Genie"
+          className={cn(
+            "group relative flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold transition-all",
+            aiActive
+              ? "bg-primary/15 text-primary"
+              : "text-muted-foreground hover:text-foreground"
+          )}
+          style={!aiActive ? {
+            background: "linear-gradient(var(--color-secondary), var(--color-secondary)) padding-box, linear-gradient(90deg, #4299E0, #CA42E0, #FF5F46) border-box",
+            border: "1.5px solid transparent",
+          } : undefined}
         >
-          <DbIcon icon={SparkleIcon} color="ai" size={16} />
-        </Button>
+          {/* Diamond sparkle icon */}
+          <svg
+            viewBox="0 0 20 20"
+            width={14}
+            height={14}
+            style={{ fill: "url(#askGenieGrad)" }}
+          >
+            <defs>
+              <linearGradient id="askGenieGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#4299E0" />
+                <stop offset="50%" stopColor="#CA42E0" />
+                <stop offset="100%" stopColor="#FF5F46" />
+              </linearGradient>
+            </defs>
+            <path d="M10 1 L11.6 8.4 L19 10 L11.6 11.6 L10 19 L8.4 11.6 L1 10 L8.4 8.4 Z" />
+          </svg>
+          <span
+            className="bg-clip-text text-transparent"
+            style={{ backgroundImage: "linear-gradient(90deg, #4299E0, #CA42E0, #FF5F46)" }}
+          >
+            Ask Genie
+          </span>
+        </button>
 
         <Button variant="ghost" size="icon-sm" aria-label="App launcher">
           <AppIcon className="h-4 w-4 text-muted-foreground" />
