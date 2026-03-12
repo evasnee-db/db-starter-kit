@@ -1904,7 +1904,7 @@ function DashboardViewer({ file }: { file: LinkedFile }) {
             <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" vertical={false} />
             <XAxis dataKey="m" tick={{ fontSize: 10, fill: "#9ca3af" }} axisLine={false} tickLine={false} />
             <YAxis tick={{ fontSize: 10, fill: "#9ca3af" }} axisLine={false} tickLine={false} tickFormatter={(v) => `$${v}M`} />
-            <Tooltip formatter={(v: number) => [`$${v}M`, "Revenue"]} contentStyle={{ fontSize: 11 }} />
+            <Tooltip formatter={(v) => [`$${Number(v)}M`, "Revenue"]} contentStyle={{ fontSize: 11 }} />
             <Area type="monotone" dataKey="v" stroke="#2272B4" strokeWidth={2} fill="url(#dvGrad)" dot={false} />
           </AreaChart>
         </ResponsiveContainer>
