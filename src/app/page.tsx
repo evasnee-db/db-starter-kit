@@ -102,14 +102,14 @@ export default function HomePage() {
   const router = useRouter()
   const [query, setQuery] = React.useState("")
   const [activeTab, setActiveTab] = React.useState("suggested")
-  const [searchMode, setSearchMode] = React.useState<"search" | "ask">("search")
+  const [searchMode, setSearchMode] = React.useState<"search" | "ask">("ask")
 
   const handleSearch = (q = query) => {
     if (q.trim()) router.push(`/genie?q=${encodeURIComponent(q.trim())}`)
   }
 
   return (
-    <AppShell activeItem="home">
+    <AppShell activeItem="home" onAiClick={() => router.push("/genie")}>
     <div className="flex-1 overflow-y-auto bg-white">
 
       {/* ── Hero ─────────────────────────────────────────────────────────── */}
@@ -186,24 +186,24 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* ── Below-box: Quick actions (Search) or Suggested questions (Ask) ── */}
-          {searchMode === "search" ? (
+          {/* ── Below-box: Quick actions (Ask/default) or Suggested questions (Search) ── */}
+          {searchMode === "ask" ? (
             <div className="flex items-center gap-2 flex-wrap justify-center mt-3">
-          {[
-            { label: "Notebooks",  icon: BookOpen,    href: null         },
-            { label: "Tables",     icon: Table2,      href: null         },
-            { label: "Jobs",       icon: Cpu,         href: null         },
-            { label: "Dashboards", icon: BarChart2,   href: "/dashboards"},
-          ].map(({ label, icon: Icon, href }) => (
-            <button
-              key={label}
-              onClick={() => { if (href) router.push(href) }}
-              className="flex items-center gap-1.5 rounded-full border border-[#e0e0e0] bg-white px-3.5 py-1.5 text-[12.5px] text-[#444] shadow-[0_1px_3px_rgba(0,0,0,0.06)] hover:border-[#ccc] hover:shadow-[0_2px_6px_rgba(0,0,0,0.09)] hover:text-[#111] transition-all"
-            >
-              <Icon size={12} className="text-[#666] shrink-0" strokeWidth={1.8} />
-              {label}
-            </button>
-          ))}
+              {[
+                { label: "Notebooks",  icon: BookOpen,    href: null         },
+                { label: "Tables",     icon: Table2,      href: null         },
+                { label: "Jobs",       icon: Cpu,         href: null         },
+                { label: "Dashboards", icon: BarChart2,   href: "/dashboards"},
+              ].map(({ label, icon: Icon, href }) => (
+                <button
+                  key={label}
+                  onClick={() => { if (href) router.push(href) }}
+                  className="flex items-center gap-1.5 rounded-full border border-[#e0e0e0] bg-white px-3.5 py-1.5 text-[12.5px] text-[#444] shadow-[0_1px_3px_rgba(0,0,0,0.06)] hover:border-[#ccc] hover:shadow-[0_2px_6px_rgba(0,0,0,0.09)] hover:text-[#111] transition-all"
+                >
+                  <Icon size={12} className="text-[#666] shrink-0" strokeWidth={1.8} />
+                  {label}
+                </button>
+              ))}
             </div>
           ) : (
             <div className="mt-1 flex flex-col">
@@ -351,53 +351,112 @@ export default function HomePage() {
           </button>
           <div
             className="relative flex overflow-hidden rounded-xl"
-            style={{ background: "linear-gradient(135deg, #FDE68A 0%, #FCD34D 40%, #FBBF24 70%, #F59E0B 100%)", minHeight: 180 }}
+            style={{ background: "#FDF6EE", minHeight: 200 }}
           >
+            {/* Orange diagonal wedge accent — top-right */}
+            <div
+              className="pointer-events-none absolute right-0 top-0 z-0"
+              style={{
+                width: 340, height: 200,
+                background: "linear-gradient(135deg, transparent 38%, #F59E0B 38%)",
+                opacity: 0.55,
+              }}
+            />
+
             {/* Left content */}
-            <div className="flex flex-col justify-between p-6 w-[320px] shrink-0 z-10">
-              <div className="flex flex-col gap-2">
-                <span className="text-[10px] font-bold uppercase tracking-widest text-amber-800/70">New App</span>
-                <div className="flex items-center gap-2">
-                  <div className="flex h-7 w-7 items-center justify-center rounded-full bg-[#F97316] shadow-sm">
-                    <span className="text-[10px] font-bold text-white leading-none">db</span>
+            <div className="relative z-10 flex flex-col justify-between p-7 w-[300px] shrink-0">
+              <div className="flex flex-col gap-2.5">
+                <span className="text-[10px] font-semibold uppercase tracking-[0.12em] text-[#9a6e3a]">New App</span>
+                {/* Square app icon + title */}
+                <div className="flex items-center gap-2.5">
+                  <div
+                    className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[10px] shadow-md"
+                    style={{ background: "linear-gradient(145deg, #FB923C, #EA580C)" }}
+                  >
+                    {/* Simplified "db" icon */}
+                    <svg viewBox="0 0 20 20" width={18} height={18} fill="none">
+                      <ellipse cx="10" cy="6" rx="7" ry="2.8" fill="white" fillOpacity="0.9"/>
+                      <path d="M3 6v4c0 1.55 3.13 2.8 7 2.8s7-1.25 7-2.8V6" stroke="white" strokeWidth="1.4" fill="none" strokeOpacity="0.9"/>
+                      <path d="M3 10v4c0 1.55 3.13 2.8 7 2.8s7-1.25 7-2.8v-4" stroke="white" strokeWidth="1.4" fill="none" strokeOpacity="0.6"/>
+                    </svg>
                   </div>
-                  <span className="text-[15px] font-semibold text-[#1c1c1c]">Databricks One</span>
+                  <span className="text-[17px] font-semibold text-[#1c1c1c] tracking-[-0.01em]">Databricks One</span>
                 </div>
-                <p className="text-[12px] text-[#444] leading-relaxed">
+                <p className="text-[12.5px] text-[#555] leading-relaxed max-w-[240px]">
                   Databricks One brings a modern, simplified experience built for business users.
                 </p>
               </div>
-              <button className="mt-4 w-fit rounded-lg bg-white px-4 py-1.5 text-[12px] font-medium text-[#1c1c1c] shadow-sm hover:bg-white/90 transition-colors">
+              <button className="mt-5 w-fit rounded-lg border border-[#e0d8ce] bg-white px-4 py-1.5 text-[12.5px] font-medium text-[#1c1c1c] shadow-sm hover:bg-[#f9f9f9] transition-colors">
                 Get started
               </button>
             </div>
 
             {/* Right: UI preview mockup */}
-            <div className="flex flex-1 items-center justify-end pr-6 py-4">
-              <div className="rounded-xl border border-white/40 bg-white/80 shadow-xl w-[340px] overflow-hidden backdrop-blur-sm">
-                {/* Mock browser bar */}
-                <div className="flex items-center gap-1.5 border-b border-[#eee] px-3 py-2">
-                  <span className="h-2 w-2 rounded-full bg-[#FF5F57]" />
-                  <span className="h-2 w-2 rounded-full bg-[#FEBC2E]" />
-                  <span className="h-2 w-2 rounded-full bg-[#28C840]" />
-                </div>
-                {/* Mock content */}
-                <div className="flex flex-col items-center gap-2.5 px-6 py-4">
-                  <p className="text-[11px] font-medium text-[#1c1c1c]">What would you like to know?</p>
-                  <div className="w-full rounded-md border border-[#e0e0e0] bg-[#f9f9f9] px-3 py-1.5">
-                    <span className="text-[10px] text-[#bbb]">Search for anything...</span>
+            <div className="relative z-10 flex flex-1 items-center justify-end pr-7 py-5">
+              <div className="w-[380px] overflow-hidden rounded-xl border border-[#e8e0d8] bg-white shadow-[0_8px_32px_rgba(0,0,0,0.13)]">
+                {/* Mock top bar */}
+                <div className="flex items-center justify-between border-b border-[#f0f0f0] px-3 py-1.5">
+                  <div className="flex items-center gap-1.5">
+                    <div className="flex h-3.5 w-3.5 items-center justify-center rounded-[3px]" style={{ background: "linear-gradient(145deg, #FB923C, #EA580C)" }}>
+                      <svg viewBox="0 0 10 10" width={9} height={9} fill="none">
+                        <ellipse cx="5" cy="3" rx="3.5" ry="1.4" fill="white" fillOpacity="0.9"/>
+                        <path d="M1.5 3v2.5c0 .77 1.57 1.4 3.5 1.4s3.5-.63 3.5-1.4V3" stroke="white" strokeWidth="0.7" fill="none"/>
+                      </svg>
+                    </div>
+                    <span className="text-[9px] font-medium text-[#555]">databricks</span>
                   </div>
-                  <div className="grid w-full grid-cols-3 gap-1.5">
-                    {["#dbeafe","#dcfce7","#fce7f3"].map((c,i) => (
-                      <div key={i} className="h-8 rounded-md" style={{ backgroundColor: c }} />
+                  <div className="h-3.5 w-3.5 rounded-full bg-[#e8e8e8]" />
+                </div>
+
+                {/* Mock content */}
+                <div className="px-4 pt-3 pb-3">
+                  {/* Search bar */}
+                  <div className="mb-2.5 flex items-center gap-1.5 rounded-lg border border-[#e8e8e8] bg-[#f9f9f9] px-2.5 py-1.5">
+                    <svg viewBox="0 0 12 12" width={9} height={9} fill="none" stroke="#bbb" strokeWidth="1.5" strokeLinecap="round">
+                      <circle cx="5" cy="5" r="3.2"/><path d="M7.5 7.5l2 2"/>
+                    </svg>
+                    <span className="text-[9px] text-[#bbb]">Search for anything in Databricks...</span>
+                    <div className="ml-auto flex items-center gap-1">
+                      <div className="rounded-full bg-[#eee] px-1.5 py-0.5 text-[7px] text-[#aaa]">Search</div>
+                      <div className="rounded-full bg-[#eee] px-1.5 py-0.5 text-[7px] text-[#aaa]">Ask</div>
+                    </div>
+                  </div>
+
+                  {/* Filter tabs */}
+                  <div className="mb-2.5 flex items-center gap-0">
+                    {["For you","Dashboards","Dashboards","Genie Spaces","Apps"].map((t, i) => (
+                      <div key={i} className={cn(
+                        "flex items-center gap-0.5 px-2 py-0.5 text-[8px] border-b-[1.5px]",
+                        i === 0 ? "border-[#1c1c1c] text-[#1c1c1c] font-semibold" : "border-transparent text-[#aaa]"
+                      )}>
+                        {i === 1 && <svg viewBox="0 0 8 8" width={6} height={6} fill="none"><rect x="0.5" y="0.5" width="3" height="3" rx="0.5" fill="#6366f1"/><rect x="4.5" y="0.5" width="3" height="3" rx="0.5" fill="#10b981"/><rect x="0.5" y="4.5" width="3" height="3" rx="0.5" fill="#f59e0b"/><rect x="4.5" y="4.5" width="3" height="3" rx="0.5" fill="#ef4444"/></svg>}
+                        {t}
+                      </div>
                     ))}
                   </div>
-                  <div className="w-full rounded-md border border-[#e8e8e8] bg-white">
-                    {[0,1,2].map(i => (
-                      <div key={i} className="flex items-center gap-2 border-b border-[#f0f0f0] px-2 py-1.5 last:border-0">
-                        <div className="h-2 w-2 rounded-full bg-[#ddd]" />
-                        <div className="h-1.5 flex-1 rounded-full bg-[#f0f0f0]" />
-                        <div className="h-1.5 w-12 rounded-full bg-[#f0f0f0]" />
+
+                  {/* Card grid */}
+                  <div className="grid grid-cols-4 gap-1.5">
+                    {[
+                      { label: "Supply Chain\nOptimization", color: "#dbeafe", dot: "#6366f1" },
+                      { label: "Operations\nChat Bot",       color: "#dcfce7", dot: "#10b981" },
+                      { label: "Marketing\nCampaign",        color: "#fce7f3", dot: "#ec4899" },
+                      { label: "Customer\nSupport Review",   color: "#fef9c3", dot: "#ca8a04" },
+                    ].map((card, i) => (
+                      <div key={i} className="flex flex-col gap-1 overflow-hidden rounded-md border border-[#e8e8e8] bg-white p-1.5">
+                        <div className="h-10 rounded-sm" style={{ backgroundColor: card.color }}>
+                          {/* tiny sparkline */}
+                          <svg viewBox="0 0 40 20" width="100%" height="100%" preserveAspectRatio="none">
+                            <polyline
+                              points={i===0?"0,15 10,10 20,13 30,7 40,9":i===1?"0,18 10,14 20,16 30,10 40,5":i===2?"0,12 10,16 20,8 30,12 40,6":"0,16 10,10 20,14 30,8 40,12"}
+                              fill="none" stroke={card.dot} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" opacity="0.7"
+                            />
+                          </svg>
+                        </div>
+                        <div className="flex items-center gap-0.5">
+                          <div className="h-1.5 w-1.5 rounded-full shrink-0" style={{ backgroundColor: card.dot }} />
+                          <span className="text-[7px] text-[#666] leading-tight truncate">{card.label.split("\n")[0]}</span>
+                        </div>
                       </div>
                     ))}
                   </div>
@@ -406,9 +465,9 @@ export default function HomePage() {
             </div>
 
             {/* Dots */}
-            <div className="absolute bottom-3 left-0 right-0 flex justify-center gap-1.5">
+            <div className="absolute bottom-3 left-0 right-0 flex justify-center gap-1.5 z-10">
               {[0,1,2].map(i => (
-                <span key={i} className={cn("h-1.5 rounded-full transition-all", i === 0 ? "w-4 bg-amber-800/50" : "w-1.5 bg-amber-800/25")} />
+                <span key={i} className={cn("h-1.5 rounded-full transition-all", i === 0 ? "w-4 bg-[#c8924a]/60" : "w-1.5 bg-[#c8924a]/25")} />
               ))}
             </div>
           </div>

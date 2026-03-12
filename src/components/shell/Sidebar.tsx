@@ -55,6 +55,7 @@ const NAV_SECTIONS: NavSection[] = [
   {
     items: [
       { id: "home",        label: "Home",        icon: Home,           href: "/" },
+      { id: "genie",       label: "Genie Chats", icon: AssistantIcon,  href: "/genie" },
       { id: "workspace",   label: "Workspace",   icon: WorkspacesIcon, href: "/shell" },
       { id: "recents",     label: "Recents",     icon: Clock },
       { id: "catalog",     label: "Catalog",     icon: CatalogIcon },
@@ -69,7 +70,6 @@ const NAV_SECTIONS: NavSection[] = [
       { id: "sql-editor",     label: "SQL Editor",     icon: QueryEditorIcon },
       { id: "queries",        label: "Queries",        icon: QueryIcon },
       { id: "dashboards",     label: "Dashboards",     icon: BarChart2,     href: "/dashboards" },
-      { id: "genie",          label: "Genie Chats",    icon: AssistantIcon, href: "/genie" },
       { id: "alerts",         label: "Alerts",         icon: Bell },
       { id: "query-history",  label: "Query History",  icon: History },
       { id: "sql-warehouses", label: "SQL Warehouses", icon: Database },

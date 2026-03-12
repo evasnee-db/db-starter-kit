@@ -44,62 +44,94 @@ const C = {
   blueFill:"#2272B414",
 }
 
-// ─── Formula One Dashboard data ───────────────────────────────────────────────
+// ─── Sample data ──────────────────────────────────────────────────────────────
 
-// Avg lap times by race — Ferrari, Red Bull, McLaren
-const lapTimesData = [
-  { race:"Bahrain",   Ferrari:93.8, RedBull:92.9, McLaren:94.2 },
-  { race:"Saudi",     Ferrari:91.2, RedBull:90.8, McLaren:91.9 },
-  { race:"Australia", Ferrari:84.7, RedBull:83.9, McLaren:85.1 },
-  { race:"Japan",     Ferrari:92.4, RedBull:91.6, McLaren:93.0 },
-  { race:"China",     Ferrari:96.1, RedBull:95.3, McLaren:96.7 },
-  { race:"Miami",     Ferrari:90.5, RedBull:89.7, McLaren:90.9 },
-  { race:"Monaco",    Ferrari:75.8, RedBull:76.3, McLaren:76.9 },
-  { race:"Canada",    Ferrari:75.2, RedBull:74.8, McLaren:75.6 },
+const timeVsDistance = [
+  { x: "3:00", Alaska:280, Arizona:310, Georgia:190, Hawaii:240, Idaho:170 },
+  { x: "3:30", Alaska:320, Arizona:260, Georgia:210, Hawaii:300, Idaho:200 },
+  { x: "4:00", Alaska:370, Arizona:290, Georgia:380, Hawaii:260, Idaho:240 },
+  { x: "4:30", Alaska:200, Arizona:310, Georgia:290, Hawaii:350, Idaho:180 },
+  { x: "5:00", Alaska:150, Arizona:270, Georgia:230, Hawaii:190, Idaho:210 },
+  { x: "5:30", Alaska:260, Arizona:240, Georgia:310, Hawaii:220, Idaho:290 },
+  { x: "6:00", Alaska:340, Arizona:360, Georgia:270, Hawaii:380, Idaho:320 },
+  { x: "6:30", Alaska:390, Arizona:400, Georgia:350, Hawaii:340, Idaho:360 },
+  { x: "7:00", Alaska:310, Arizona:330, Georgia:290, Hawaii:310, Idaho:280 },
 ]
 
-// Constructor championship points
-const constructorPtsData = [
-  { team:"Red Bull",  points:287 },
-  { team:"McLaren",   points:241 },
-  { team:"Ferrari",   points:222 },
-  { team:"Mercedes",  points:147 },
-  { team:"Aston M.",  points:98  },
-  { team:"Alpine",    points:53  },
+// ─── Revenue Forecast Dashboard data ─────────────────────────────────────────
+
+// Revenue Trend — actuals (Oct–Mar) + forecast (Apr–Sep)
+const revTrendData = [
+  { month:"Oct '25", actual:3.8,  forecast:null },
+  { month:"Nov '25", actual:4.0,  forecast:null },
+  { month:"Dec '25", actual:3.6,  forecast:null },
+  { month:"Jan '26", actual:4.2,  forecast:null },
+  { month:"Feb '26", actual:4.6,  forecast:null },
+  { month:"Mar '26", actual:5.1,  forecast:5.1  },
+  { month:"Apr '26", actual:null, forecast:5.5  },
+  { month:"May '26", actual:null, forecast:5.9  },
+  { month:"Jun '26", actual:null, forecast:6.3  },
+  { month:"Jul '26", actual:null, forecast:6.8  },
+  { month:"Aug '26", actual:null, forecast:7.1  },
+  { month:"Sep '26", actual:null, forecast:7.6  },
 ]
 
-// Driver standings
-const driverStandingsData = [
-  { driver:"VER", pts:195, target:250 },
-  { driver:"NOR", pts:131, target:250 },
-  { driver:"LEC", pts:138, target:250 },
-  { driver:"SAI", pts:84,  target:250 },
-  { driver:"HAM", pts:81,  target:250 },
-  { driver:"PER", pts:92,  target:250 },
+// Revenue by Product — bar chart
+const revByProductData = [
+  { name:"Platform",  value:420 },
+  { name:"Pro",       value:310 },
+  { name:"Enterprise",value:580 },
+  { name:"Support",   value:210 },
+  { name:"Training",  value:140 },
 ]
 
-// Pit stop avg by team
-const pitStopByTeamData = [
-  { team:"Ferrari",  avg:2.4, fastest:2.1 },
-  { team:"McLaren",  avg:2.5, fastest:2.3 },
-  { team:"Red Bull", avg:2.6, fastest:2.2 },
-  { team:"Mercedes", avg:2.7, fastest:2.4 },
-  { team:"Alpine",   avg:3.1, fastest:2.8 },
+// Pipeline by Stage — funnel-style bar
+const pipelineStageData = [
+  { stage:"Prospecting",  value:8.4, deals:142 },
+  { stage:"Qualified",    value:5.1, deals:67  },
+  { stage:"Proposal",     value:3.2, deals:31  },
+  { stage:"Negotiation",  value:1.8, deals:14  },
+  { stage:"Closing",      value:0.6, deals:6   },
 ]
 
-// Championship gap over season rounds
-const champGapLine = [
-  { round:"R1", Ferrari:0,  Mercedes:12, McLaren:8  },
-  { round:"R4", Ferrari:25, Mercedes:18, McLaren:15 },
-  { round:"R7", Ferrari:42, Mercedes:28, McLaren:30 },
-  { round:"R10",Ferrari:60, Mercedes:40, McLaren:48 },
-  { round:"R13",Ferrari:85, Mercedes:55, McLaren:70 },
+// Quota Attainment — bar chart by rep
+const quotaAttainmentData = [
+  { rep:"J. Kim",      attainment:118, quota:100 },
+  { rep:"A. Rivera",   attainment:109, quota:100 },
+  { rep:"M. Ellis",    attainment:98,  quota:100 },
+  { rep:"C. Patel",    attainment:87,  quota:100 },
+  { rep:"T. Okonkwo",  attainment:122, quota:100 },
+  { rep:"S. Nakamura", attainment:76,  quota:100 },
 ]
 
-// KPI sparklines
-const kpiSpark1 = [{v:92},{v:90},{v:84},{v:91},{v:95},{v:90},{v:76},{v:75}]
-const kpiSpark2 = [{v:2.6},{v:2.5},{v:2.7},{v:2.6},{v:2.4},{v:2.7},{v:3.1},{v:2.6}]
-const kpiSpark3 = [{v:1},{v:2},{v:3},{v:4},{v:5},{v:7},{v:8},{v:9}]
+// Deal Velocity — scatter (x = deal size $k, y = days to close)
+const dealVelocityEnt = [
+  {x:120,y:42},{x:200,y:60},{x:350,y:75},{x:480,y:90},{x:600,y:105},
+  {x:250,y:55},{x:400,y:80},{x:550,y:95},{x:180,y:50},{x:310,y:68},
+]
+const dealVelocityMid = [
+  {x:40,y:18},{x:65,y:22},{x:90,y:30},{x:75,y:25},{x:55,y:20},
+  {x:85,y:28},{x:50,y:21},{x:70,y:27},{x:95,y:32},{x:60,y:24},
+]
+const dealVelocitySMB = [
+  {x:10,y:7},{x:18,y:10},{x:25,y:12},{x:15,y:8},{x:22,y:11},
+  {x:12,y:9},{x:30,y:14},{x:8,y:6},{x:20,y:10},{x:28,y:13},
+]
+
+// Deal Velocity line — monthly avg days to close
+const dealVelocityLine = [
+  { month:"Oct", Enterprise:92, Midmarket:28, SMB:10 },
+  { month:"Nov", Enterprise:87, Midmarket:26, SMB:9  },
+  { month:"Dec", Enterprise:98, Midmarket:30, SMB:11 },
+  { month:"Jan", Enterprise:85, Midmarket:24, SMB:8  },
+  { month:"Feb", Enterprise:80, Midmarket:22, SMB:9  },
+  { month:"Mar", Enterprise:78, Midmarket:21, SMB:8  },
+]
+
+// KPI sparklines (tiny area charts in KPI cards)
+const kpiSpark1 = [{v:3.6},{v:3.8},{v:4.0},{v:3.7},{v:4.2},{v:4.6},{v:5.1},{v:5.5},{v:5.9},{v:6.3}]
+const kpiSpark2 = [{v:82},{v:84},{v:87},{v:83},{v:89},{v:91},{v:94},{v:97},{v:96},{v:98}]
+const kpiSpark3 = [{v:71},{v:74},{v:76},{v:73},{v:78},{v:80},{v:82},{v:79},{v:84},{v:86}]
 
 // ─── AI chat messages ─────────────────────────────────────────────────────────
 
@@ -111,24 +143,23 @@ const INITIAL_MSGS: ChatMsg[] = [
   {
     id: "0",
     role: "ai",
-    text: "Hi! I can answer questions about this Formula One dashboard or add new visualizations. Try asking about lap times, pit stops, driver standings, or say \"Add a tire degradation chart\".",
+    text: "Hi! I can answer questions about this Revenue Forecast dashboard or add new visualizations. Try asking about your pipeline, quota attainment, or say \"Add a monthly ARR chart\".",
   },
 ]
 
 const SUGGESTED = [
-  "Which team had the fastest average pit stop?",
-  "Add a tire degradation chart",
-  "How does lap time vary by circuit type?",
-  "Show championship standings over the season",
+  "Which rep has the highest quota attainment?",
+  "Add a monthly ARR growth chart",
+  "How does deal velocity compare by segment?",
+  "What is our forecast vs. target for Q3?",
 ]
 
 // ─── Fake AI responses ────────────────────────────────────────────────────────
 
 const SPECIFIC_WIDGET_WORDS = [
-  "lap", "pit", "stop", "tire", "tyre", "compound", "sector", "stint",
-  "driver", "team", "circuit", "race", "qualifying", "overtake", "gap",
-  "championship", "standing", "position", "fastest", "degradation",
-  "scatter", "bar", "line", "area", "trend", "speed", "strategy",
+  "revenue", "forecast", "pipeline", "quota", "attainment", "deal", "velocity",
+  "arr", "mrr", "segment", "product", "churn", "retention", "conversion",
+  "scatter", "bar", "line", "area", "trend", "rep", "region", "stage",
 ]
 
 const WIDGET_CONTEXT_WORDS = [
@@ -161,42 +192,42 @@ function isGenericWidgetIntent(p: string) {
 }
 
 function getChartTypeFromPrompt(p: string): string {
-  return p.includes("lap") || p.includes("trend") ? "Lap Times"
-    : p.includes("pit") ? "Pit Stop Times"
-    : p.includes("tire") || p.includes("tyre") || p.includes("degradation") ? "Tire Degradation"
-    : p.includes("championship") || p.includes("gap") ? "Championship Gap"
-    : p.includes("qualifying") ? "Qualifying Performance"
-    : p.includes("scatter") ? "Scatter Plot"
+  return p.includes("trend") || p.includes("arr") || p.includes("mrr") ? "Revenue Trend"
+    : p.includes("scatter") ? "Deal Scatter"
     : p.includes("bar") ? "Bar Chart"
-    : p.includes("driver") || p.includes("standing") ? "Driver Standings"
-    : p.includes("constructor") || p.includes("team") ? "Constructor Points"
-    : p.includes("overtake") || p.includes("position") ? "Race Positions"
+    : p.includes("pipeline") || p.includes("stage") ? "Pipeline by Stage"
+    : p.includes("line") ? "Line Chart"
+    : p.includes("quota") || p.includes("attainment") ? "Quota Attainment"
+    : p.includes("velocity") || p.includes("deal") ? "Deal Velocity"
+    : p.includes("product") || p.includes("segment") ? "Revenue by Product"
+    : p.includes("region") || p.includes("geo") ? "Revenue by Region"
+    : p.includes("forecast") ? "Revenue Forecast"
     : "Custom Visualization"
 }
 
 function getAiResponse(prompt: string): { text: string; widget?: boolean; sql?: string; followUps?: string[]; preview?: WidgetPreviewData } {
   const p = prompt.toLowerCase()
 
-  if ((p.includes("pit") || p.includes("fastest")) && !isWidgetIntent(p)) return {
-    text: "Ferrari had the fastest average pit stop at 2.4s this season, with a best of 2.1s at the Australian GP. Red Bull is second at 2.6s avg.",
-    sql: `SELECT team,\n  AVG(pit_duration) AS avg_stop,\n  MIN(pit_duration) AS fastest_stop\nFROM f1.pit_stops\nWHERE season = 2024\nGROUP BY team\nORDER BY avg_stop;`,
+  if (p.includes("quota") && !isWidgetIntent(p)) return {
+    text: "T. Okonkwo leads quota attainment at 122%, followed by J. Kim at 118%. Three reps are above 100% — overall team attainment is 95% this quarter.",
+    sql: `SELECT rep_name,\n  SUM(closed_won) / SUM(quota) * 100 AS attainment_pct\nFROM sales.quotas\nWHERE quarter = CURRENT_QUARTER()\nGROUP BY rep_name\nORDER BY attainment_pct DESC;`,
   }
 
-  if (p.includes("lap time") && !isWidgetIntent(p)) return {
-    text: "Red Bull posted the fastest average lap times across the season at 89.7s. Ferrari is 0.6s behind on average. Monaco was the outlier with all teams dipping below 77s.",
-    sql: `SELECT team,\n  AVG(lap_time_s) AS avg_lap\nFROM f1.lap_times\nWHERE season = 2024\nGROUP BY team\nORDER BY avg_lap;`,
+  if (p.includes("fastest") || p.includes("best rep")) return {
+    text: "J. Kim closed $1.24M with +18% growth — the highest total revenue this quarter. T. Okonkwo has the best attainment at 122%.",
+    sql: `SELECT rep_name, SUM(amount) AS total_revenue\nFROM salesforce.opportunities\nWHERE stage = 'Closed Won' AND quarter = CURRENT_QUARTER()\nGROUP BY rep_name\nORDER BY total_revenue DESC LIMIT 5;`,
   }
 
   // Generic widget request → ask clarifying questions
   if (isGenericWidgetIntent(p)) return {
-    text: "Happy to add something! What F1 metric would you like to visualize?",
+    text: "Happy to add something! To make sure it's useful, what would you like to explore?",
     followUps: [
-      "Lap time comparison by team",
-      "Pit stop duration by circuit",
-      "Tire degradation by compound",
-      "Championship points over the season",
-      "Qualifying pace vs race pace",
-      "Overtakes per race",
+      "Monthly ARR growth over the last 12 months",
+      "Pipeline value by stage",
+      "Quota attainment by rep",
+      "Deal velocity by segment",
+      "Revenue by product line",
+      "Churn rate trend by cohort",
     ],
   }
 
@@ -206,18 +237,18 @@ function getAiResponse(prompt: string): { text: string; widget?: boolean; sql?: 
     return {
       text: `Here's a preview of the ${chartType} widget. Does this look right? You can refine it or add it to the dashboard.`,
       preview: { chartType, prompt: p, version: 1 },
-      sql: `SELECT race, team, AVG(lap_time_s) AS avg_lap\nFROM f1.lap_times\nWHERE season = 2024\nGROUP BY race, team\nORDER BY race;`,
+      sql: `SELECT DATE_TRUNC('month', close_date) AS month,\n  SUM(amount) AS revenue,\n  segment\nFROM salesforce.opportunities\nWHERE stage = 'Closed Won'\nGROUP BY 1, segment\nORDER BY 1;`,
     }
   }
 
-  if (p.includes("compare") || p.includes("strategy") || p.includes("circuit")) return {
-    text: "Street circuits (Monaco, Baku) favor Ferrari's mechanical grip, while Red Bull dominates high-speed layouts. McLaren has closed the gap on medium-downforce circuits this season.",
-    sql: `SELECT circuit_type, team,\n  AVG(lap_time_s) AS avg_lap,\n  COUNT(DISTINCT race_id) AS races\nFROM f1.lap_times\nJOIN f1.circuits USING (circuit_id)\nWHERE season = 2024\nGROUP BY 1, 2;`,
+  if (p.includes("compare") || p.includes("segment") || p.includes("velocity")) return {
+    text: "Enterprise deals take ~85 days to close on average but have 4× higher ACV. SMB closes in under 10 days. Mid-market is the fastest-growing segment at +22% QoQ.",
+    sql: `SELECT segment,\n  AVG(days_to_close) AS avg_days,\n  AVG(amount) AS avg_acv,\n  COUNT(*) AS deal_count\nFROM salesforce.opportunities\nWHERE stage = 'Closed Won'\nGROUP BY segment;`,
   }
 
   return {
-    text: "Red Bull leads the constructor championship with 287 points. McLaren is 46 points behind in second. Ferrari sits third at 222 points — the gap has been narrowing since Monaco.",
-    sql: `SELECT team,\n  SUM(points) AS total_points,\n  COUNT(*) AS races_completed\nFROM f1.race_results\nWHERE season = 2024\nGROUP BY team\nORDER BY total_points DESC;`,
+    text: "Based on the current pipeline, we're tracking at $30.2M forecasted for the next 6 months — 11% ahead of the same period last year. Enterprise deals are the primary growth driver at +14% YoY.",
+    sql: `SELECT DATE_TRUNC('month', forecast_date) AS month,\n  SUM(predicted_revenue) AS forecast,\n  SUM(lower_bound) AS p10,\n  SUM(upper_bound) AS p90\nFROM ml.revenue_forecast\nWHERE forecast_date BETWEEN CURRENT_DATE AND DATEADD(month, 6, CURRENT_DATE)\nGROUP BY 1 ORDER BY 1;`,
   }
 }
 
@@ -302,79 +333,80 @@ function ChartCard({
 // ─── New widget preview ───────────────────────────────────────────────────────
 
 // Churn / retention trend (reused as "optional new widget")
-// Tire degradation — lap time delta per compound over a stint
-const tireDegData = [
-  { lap: 1,  Soft: 83.2, Medium: 83.8, Hard: 84.2 },
-  { lap: 3,  Soft: 83.5, Medium: 83.9, Hard: 84.3 },
-  { lap: 6,  Soft: 84.1, Medium: 84.1, Hard: 84.4 },
-  { lap: 9,  Soft: 85.0, Medium: 84.3, Hard: 84.5 },
-  { lap: 12, Soft: 86.3, Medium: 84.6, Hard: 84.6 },
-  { lap: 15, Soft: 88.1, Medium: 85.1, Hard: 84.8 },
-  { lap: 18, Soft: 90.4, Medium: 85.7, Hard: 85.1 },
+const retentionTrendData = [
+  { month: "Oct", Enterprise: 98, Midmarket: 94, SMB: 88 },
+  { month: "Nov", Enterprise: 97, Midmarket: 93, SMB: 87 },
+  { month: "Dec", Enterprise: 98, Midmarket: 92, SMB: 85 },
+  { month: "Jan", Enterprise: 99, Midmarket: 94, SMB: 87 },
+  { month: "Feb", Enterprise: 98, Midmarket: 95, SMB: 88 },
+  { month: "Mar", Enterprise: 99, Midmarket: 96, SMB: 90 },
 ]
 
-// Race Strategy Sankey: Compound → Team → Stint outcome
+// Revenue Flow Sankey: Product Line → Customer Segment → Region
 const sankeyData = {
   nodes: [
-    // Compounds (0-2)
-    { name: "Soft" },
-    { name: "Medium" },
-    { name: "Hard" },
-    // Teams (3-5)
-    { name: "Ferrari" },
-    { name: "Red Bull" },
-    { name: "McLaren" },
-    // Outcomes (6-8)
-    { name: "P1–P3" },
-    { name: "P4–P6" },
-    { name: "P7+" },
+    // Product lines (0-4)
+    { name: "Platform" },
+    { name: "Pro" },
+    { name: "Enterprise" },
+    { name: "Support" },
+    // Segments (4-6)
+    { name: "Large Co." },
+    { name: "Mid-market" },
+    { name: "SMB" },
+    // Regions (7-9)
+    { name: "Americas" },
+    { name: "EMEA" },
+    { name: "APAC" },
   ],
   links: [
-    // Compound → Team
-    { source: 0, target: 3, value: 18 },
-    { source: 0, target: 4, value: 14 },
-    { source: 0, target: 5, value: 12 },
-    { source: 1, target: 3, value: 20 },
-    { source: 1, target: 4, value: 22 },
-    { source: 1, target: 5, value: 16 },
-    { source: 2, target: 3, value: 10 },
-    { source: 2, target: 4, value: 12 },
-    { source: 2, target: 5, value: 8  },
-    // Team → Outcome
-    { source: 3, target: 6, value: 22 },
-    { source: 3, target: 7, value: 18 },
-    { source: 3, target: 8, value: 8  },
-    { source: 4, target: 6, value: 28 },
-    { source: 4, target: 7, value: 12 },
-    { source: 4, target: 8, value: 8  },
-    { source: 5, target: 6, value: 18 },
-    { source: 5, target: 7, value: 14 },
-    { source: 5, target: 8, value: 4  },
+    // Product → Segment
+    { source: 0, target: 4, value: 18 }, // Platform → Large
+    { source: 0, target: 5, value: 12 }, // Platform → Mid
+    { source: 1, target: 4, value: 10 }, // Pro → Large
+    { source: 1, target: 5, value: 14 }, // Pro → Mid
+    { source: 1, target: 6, value: 8  }, // Pro → SMB
+    { source: 2, target: 4, value: 28 }, // Enterprise → Large
+    { source: 2, target: 5, value: 6  }, // Enterprise → Mid
+    { source: 3, target: 4, value: 5  }, // Support → Large
+    { source: 3, target: 5, value: 7  }, // Support → Mid
+    { source: 3, target: 6, value: 4  }, // Support → SMB
+    // Segment → Region
+    { source: 4, target: 7, value: 28 }, // Large → Americas
+    { source: 4, target: 8, value: 20 }, // Large → EMEA
+    { source: 4, target: 9, value: 13 }, // Large → APAC
+    { source: 5, target: 7, value: 22 }, // Mid → Americas
+    { source: 5, target: 8, value: 10 }, // Mid → EMEA
+    { source: 5, target: 9, value: 7  }, // Mid → APAC
+    { source: 6, target: 7, value: 8  }, // SMB → Americas
+    { source: 6, target: 8, value: 3  }, // SMB → EMEA
+    { source: 6, target: 9, value: 1  }, // SMB → APAC
   ],
 }
 
 const SANKEY_COLORS: Record<string, string> = {
-  Soft:      "#e8484a",
-  Medium:    "#D4A017",
-  Hard:      "#5F7281",
-  Ferrari:   "#e8484a",
-  "Red Bull":"#1e3a8a",
-  McLaren:   "#f97316",
-  "P1–P3":   "#27794B",
-  "P4–P6":   "#2272B4",
-  "P7+":     "#BE501E",
+  Platform:   "#2272B4",
+  Pro:        "#27794B",
+  Enterprise: "#D4A017",
+  Support:    "#1B8A78",
+  "Large Co.":"#2272B4",
+  "Mid-market":"#27794B",
+  SMB:        "#BE501E",
+  Americas:   "#2272B4",
+  EMEA:       "#1B8A78",
+  APAC:       "#D4A017",
 }
 
 // ─── @-mention autocomplete ───────────────────────────────────────────────────
 
 const MENTION_SOURCES = [
-  { id: "f1.lap_times",      label: "f1.lap_times",      type: "table",   icon: "📋" },
-  { id: "f1.pit_stops",      label: "f1.pit_stops",      type: "table",   icon: "📋" },
-  { id: "f1.race_results",   label: "f1.race_results",   type: "table",   icon: "📋" },
-  { id: "f1.circuits",       label: "f1.circuits",       type: "table",   icon: "📋" },
-  { id: "f1.driver_standings",label:"f1.driver_standings",type: "table",   icon: "📋" },
-  { id: "tire_strategy_model",label:"tire_strategy_model",type: "model",   icon: "🤖" },
-  { id: "f1_dashboard_2024", label: "f1_dashboard_2024", type: "dashboard", icon: "📊" },
+  { id: "salesforce.opportunities",  label: "salesforce.opportunities",  type: "table",   icon: "📋" },
+  { id: "salesforce.quotas",         label: "salesforce.quotas",         type: "table",   icon: "📋" },
+  { id: "ml.revenue_forecast",       label: "ml.revenue_forecast",       type: "model",   icon: "🤖" },
+  { id: "customers.subscriptions",   label: "customers.subscriptions",   type: "table",   icon: "📋" },
+  { id: "revenue_forecast_dashboard",label: "revenue_forecast_dashboard",type: "dashboard", icon: "📊" },
+  { id: "churn_probability_model",   label: "churn_probability_model",   type: "model",   icon: "🤖" },
+  { id: "pipeline_analytics",        label: "pipeline_analytics",        type: "table",   icon: "📋" },
 ]
 
 function AtMentionInput({
@@ -1136,30 +1168,62 @@ type DynamicWidget = {
 
 // Metadata for static widgets so they can be copied
 const STATIC_WIDGET_META: Record<string, { title: string; subtitle: string; chartType: DynamicWidget["chartType"] }> = {
-  "lap-times":      { title: "Avg Lap Times by Race",     subtitle: "Ferrari vs Red Bull vs McLaren across all races.", chartType: "area" },
-  "constructor-pts":{ title: "Constructor Standings",     subtitle: "Championship points by constructor.",             chartType: "bar"  },
-  "driver-standing":{ title: "Driver Points",             subtitle: "Points scored vs max possible this season.",      chartType: "bar"  },
-  "pit-stops":      { title: "Pit Stop Times by Team",    subtitle: "Average and fastest pit stop per team.",          chartType: "bar"  },
-  "champ-gap":      { title: "Championship Gap",          subtitle: "Cumulative points gap to Ferrari over rounds.",   chartType: "line" },
-  "race-strategy":  { title: "Race Strategy Flow",        subtitle: "Compound → Team → Finishing position.",          chartType: "bar"  },
-  "tire-deg":       { title: "Tire Degradation",          subtitle: "Lap time delta by compound over a stint.",       chartType: "line" },
+  "rev-trend":      { title: "Revenue Trend",             subtitle: "Actuals vs forecast — last 6 months + next 6.",  chartType: "area" },
+  "rev-by-product": { title: "Revenue by Product Line",   subtitle: "Breakdown of revenue across product lines.",     chartType: "bar"  },
+  "pipeline-stage": { title: "Pipeline by Stage",         subtitle: "Total pipeline value and deal count by stage.",  chartType: "bar"  },
+  "quota-attain":   { title: "Quota Attainment by Rep",   subtitle: "Attainment % vs. 100% quota target.",           chartType: "bar"  },
+  "deal-velocity":  { title: "Deal Velocity by Segment",  subtitle: "Avg days to close by customer segment.",        chartType: "line" },
+  "rev-flow":       { title: "Revenue Flow",              subtitle: "Product → Customer Segment → Region.",          chartType: "bar"  },
+  "retention":      { title: "Retention by Segment",      subtitle: "Monthly retention rate by customer segment.",   chartType: "line" },
 }
+
+const revenueByProduct = [
+  { name: "Software", value: 420 },
+  { name: "Services", value: 310 },
+  { name: "Hardware", value: 185 },
+  { name: "Support",  value: 260 },
+  { name: "Training", value: 140 },
+]
+
+const revenueByQuarter = [
+  { q: "Q2 2025", enterprise: 310, smb: 180, startup: 90 },
+  { q: "Q3 2025", enterprise: 370, smb: 210, startup: 115 },
+  { q: "Q4 2025", enterprise: 440, smb: 245, startup: 130 },
+]
+
+const driverAvgLap = [
+  { driver: "LEC", avg: 88.4 },
+  { driver: "SAI", avg: 89.1 },
+  { driver: "VER", avg: 87.9 },
+  { driver: "HAM", avg: 90.3 },
+  { driver: "NOR", avg: 89.7 },
+]
+
+const pitStopData = [
+  { team: "Ferrari",  avg: 2.4, fastest: 2.1 },
+  { team: "Mclaren",  avg: 2.6, fastest: 2.3 },
+  { team: "Mercedes", avg: 2.7, fastest: 2.4 },
+  { team: "Alpine",   avg: 2.9, fastest: 2.6 },
+  { team: "Haas",     avg: 3.1, fastest: 2.8 },
+]
 
 function widgetFromPrompt(prompt: string): DynamicWidget {
   const p = prompt.toLowerCase()
   const id = `dyn-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`
-  if (p.includes("lap") || p.includes("trend") || p.includes("time"))
-    return { id, title: "Avg Lap Times by Race",   subtitle: prompt, chartType: "area" }
-  if (p.includes("pit") || p.includes("stop"))
-    return { id, title: "Pit Stop Times by Team",  subtitle: prompt, chartType: "bar"  }
-  if (p.includes("tire") || p.includes("tyre") || p.includes("degradation"))
-    return { id, title: "Tire Degradation",        subtitle: prompt, chartType: "line" }
-  if (p.includes("championship") || p.includes("gap") || p.includes("standing"))
-    return { id, title: "Championship Gap",        subtitle: prompt, chartType: "line" }
-  if (p.includes("constructor") || p.includes("points") || p.includes("team"))
-    return { id, title: "Constructor Standings",   subtitle: prompt, chartType: "bar"  }
-  if (p.includes("driver") || p.includes("qualifying") || p.includes("pace"))
-    return { id, title: "Driver Points",           subtitle: prompt, chartType: "bar"  }
+  if (p.includes("arr") || p.includes("mrr") || p.includes("trend"))
+    return { id, title: "Monthly ARR Growth", subtitle: prompt, chartType: "area" }
+  if (p.includes("pipeline") || p.includes("stage") || p.includes("funnel"))
+    return { id, title: "Pipeline by Stage", subtitle: prompt, chartType: "bar" }
+  if (p.includes("quota") || p.includes("attainment") || p.includes("rep"))
+    return { id, title: "Quota Attainment by Rep", subtitle: prompt, chartType: "bar" }
+  if (p.includes("deal") || p.includes("velocity") || p.includes("days"))
+    return { id, title: "Deal Velocity by Segment", subtitle: prompt, chartType: "line" }
+  if (p.includes("churn") || p.includes("retention"))
+    return { id, title: "Retention by Segment", subtitle: prompt, chartType: "line" }
+  if (p.includes("product") || p.includes("segment") || p.includes("breakdown"))
+    return { id, title: "Revenue by Product Line", subtitle: prompt, chartType: "bar" }
+  if (p.includes("region") || p.includes("geo") || p.includes("territory"))
+    return { id, title: "Revenue by Region", subtitle: prompt, chartType: "bar" }
   return {
     id,
     title: prompt.length > 42 ? prompt.slice(0, 39) + "…" : prompt,
@@ -1170,95 +1234,94 @@ function widgetFromPrompt(prompt: string): DynamicWidget {
 
 function DynamicWidgetChart({ widget }: { widget: DynamicWidget }) {
   const t = widget.title.toLowerCase()
-  if (t.includes("lap") || t.includes("trend")) {
+  if (t.includes("arr") || t.includes("trend")) {
     return (
       <ResponsiveContainer width="100%" height="100%">
-        <AreaChart data={lapTimesData} margin={{ top: 8, right: 4, bottom: 8, left: -10 }}>
+        <AreaChart data={revTrendData} margin={{ top: 8, right: 4, bottom: 8, left: -10 }}>
           <defs>
-            <linearGradient id="dynLapGrad" x1="0" y1="0" x2="0" y2="1">
+            <linearGradient id="dynActualGrad" x1="0" y1="0" x2="0" y2="1">
               <stop offset="5%" stopColor={C.blue} stopOpacity={0.2} />
               <stop offset="95%" stopColor={C.blue} stopOpacity={0} />
             </linearGradient>
           </defs>
           <CartesianGrid strokeDasharray="3 3" stroke="#E8ECF0" vertical={false} />
-          <XAxis dataKey="race" tick={{ fontSize: 9, fill: "#5F7281" }} interval={1} />
-          <YAxis tick={{ fontSize: 11, fill: "#5F7281" }} domain={["auto","auto"]} />
+          <XAxis dataKey="month" tick={{ fontSize: 9, fill: "#5F7281" }} interval={1} />
+          <YAxis tick={{ fontSize: 11, fill: "#5F7281" }} />
           <Tooltip contentStyle={{ fontSize: 12, borderRadius: 4, borderColor: "#E8ECF0" }} />
-          <Area type="monotone" dataKey="Ferrari"  stroke={C.orange} fill="url(#dynLapGrad)" strokeWidth={2} name="Ferrari (s)" dot={false} />
-          <Area type="monotone" dataKey="RedBull"  stroke={C.blue}   fill="transparent"     strokeWidth={2} name="Red Bull (s)" dot={false} />
-          <Area type="monotone" dataKey="McLaren"  stroke={C.teal}   fill="transparent"     strokeWidth={2} name="McLaren (s)" dot={false} />
+          <Area type="monotone" dataKey="actual" stroke={C.blue} fill="url(#dynActualGrad)" strokeWidth={2} name="Actual ($M)" connectNulls />
+          <Area type="monotone" dataKey="forecast" stroke={C.teal} fill="transparent" strokeWidth={2} strokeDasharray="4 3" name="Forecast ($M)" connectNulls />
         </AreaChart>
       </ResponsiveContainer>
     )
   }
-  if (t.includes("constructor") || t.includes("standing") || t.includes("points")) {
+  if (t.includes("pipeline") || t.includes("stage")) {
     return (
       <ResponsiveContainer width="100%" height="100%">
-        <BarChart data={constructorPtsData} layout="vertical" margin={{ top: 8, right: 16, bottom: 8, left: 16 }}>
+        <BarChart data={pipelineStageData} layout="vertical" margin={{ top: 8, right: 16, bottom: 8, left: 16 }}>
           <CartesianGrid strokeDasharray="3 3" stroke="#E8ECF0" horizontal={false} />
           <XAxis type="number" tick={{ fontSize: 11, fill: "#5F7281" }} />
-          <YAxis type="category" dataKey="team" tick={{ fontSize: 11, fill: "#5F7281" }} width={64} />
+          <YAxis type="category" dataKey="stage" tick={{ fontSize: 11, fill: "#5F7281" }} width={72} />
           <Tooltip contentStyle={{ fontSize: 12, borderRadius: 4, borderColor: "#E8ECF0" }} />
-          <Bar dataKey="points" fill={C.blue} radius={[0, 2, 2, 0]} name="Points" />
+          <Bar dataKey="value" fill={C.blue} radius={[0, 2, 2, 0]} name="Value ($M)" />
         </BarChart>
       </ResponsiveContainer>
     )
   }
-  if (t.includes("driver")) {
+  if (t.includes("quota") || t.includes("attainment")) {
     return (
       <ResponsiveContainer width="100%" height="100%">
-        <BarChart data={driverStandingsData} margin={{ top: 8, right: 4, bottom: 24, left: -10 }}>
+        <BarChart data={quotaAttainmentData} margin={{ top: 8, right: 4, bottom: 24, left: -10 }}>
           <CartesianGrid strokeDasharray="3 3" stroke="#E8ECF0" />
-          <XAxis dataKey="driver" tick={{ fontSize: 10, fill: "#5F7281" }} />
-          <YAxis tick={{ fontSize: 11, fill: "#5F7281" }} domain={[0, 260]} />
+          <XAxis dataKey="rep" tick={{ fontSize: 10, fill: "#5F7281" }} />
+          <YAxis tick={{ fontSize: 11, fill: "#5F7281" }} domain={[0, 140]} />
           <Tooltip contentStyle={{ fontSize: 12, borderRadius: 4, borderColor: "#E8ECF0" }} />
-          <Bar dataKey="pts"    fill={C.blue}   radius={[2, 2, 0, 0]} name="Points" />
-          <Bar dataKey="target" fill="#E8ECF0"  radius={[2, 2, 0, 0]} name="Max (250)" />
+          <Bar dataKey="attainment" fill={C.teal} radius={[2, 2, 0, 0]} name="Attainment %" />
+          <Bar dataKey="quota" fill="#E8ECF0" radius={[2, 2, 0, 0]} name="Target (100%)" />
         </BarChart>
       </ResponsiveContainer>
     )
   }
-  if (t.includes("championship") || t.includes("gap")) {
+  if (t.includes("deal") || t.includes("velocity")) {
     return (
       <ResponsiveContainer width="100%" height="100%">
-        <LineChart data={champGapLine} margin={{ top: 8, right: 4, bottom: 8, left: -10 }}>
+        <LineChart data={dealVelocityLine} margin={{ top: 8, right: 4, bottom: 8, left: -10 }}>
           <CartesianGrid strokeDasharray="3 3" stroke="#E8ECF0" vertical={false} />
-          <XAxis dataKey="round" tick={{ fontSize: 11, fill: "#5F7281" }} />
+          <XAxis dataKey="month" tick={{ fontSize: 11, fill: "#5F7281" }} />
           <YAxis tick={{ fontSize: 11, fill: "#5F7281" }} />
           <Tooltip contentStyle={{ fontSize: 12, borderRadius: 4, borderColor: "#E8ECF0" }} />
           <Legend verticalAlign="top" align="left" iconSize={10} wrapperStyle={{ fontSize: 11, paddingBottom: 4 }} />
-          <Line type="monotone" dataKey="Ferrari"  stroke="#e8484a" strokeWidth={2} dot={false} />
-          <Line type="monotone" dataKey="Mercedes" stroke="#00d2be" strokeWidth={2} dot={false} />
-          <Line type="monotone" dataKey="McLaren"  stroke="#f97316" strokeWidth={2} dot={false} />
+          <Line type="monotone" dataKey="Enterprise" stroke={C.blue}   strokeWidth={2} dot={false} />
+          <Line type="monotone" dataKey="Midmarket"  stroke={C.teal}   strokeWidth={2} dot={false} />
+          <Line type="monotone" dataKey="SMB"        stroke={C.yellow} strokeWidth={2} dot={false} />
         </LineChart>
       </ResponsiveContainer>
     )
   }
-  if (t.includes("tire") || t.includes("degradation")) {
+  if (t.includes("retention") || t.includes("churn")) {
     return (
       <ResponsiveContainer width="100%" height="100%">
-        <LineChart data={tireDegData} margin={{ top: 8, right: 4, bottom: 8, left: -10 }}>
+        <LineChart data={retentionTrendData} margin={{ top: 8, right: 4, bottom: 8, left: -10 }}>
           <CartesianGrid strokeDasharray="3 3" stroke="#E8ECF0" vertical={false} />
-          <XAxis dataKey="lap" tick={{ fontSize: 11, fill: "#5F7281" }} />
-          <YAxis tick={{ fontSize: 11, fill: "#5F7281" }} domain={["auto","auto"]} />
+          <XAxis dataKey="month" tick={{ fontSize: 11, fill: "#5F7281" }} />
+          <YAxis tick={{ fontSize: 11, fill: "#5F7281" }} domain={[80, 100]} />
           <Tooltip contentStyle={{ fontSize: 12, borderRadius: 4, borderColor: "#E8ECF0" }} />
           <Legend verticalAlign="top" align="left" iconSize={10} wrapperStyle={{ fontSize: 11, paddingBottom: 4 }} />
-          <Line type="monotone" dataKey="Soft"   stroke="#e8484a" strokeWidth={2} dot={false} />
-          <Line type="monotone" dataKey="Medium" stroke={C.yellow} strokeWidth={2} dot={false} />
-          <Line type="monotone" dataKey="Hard"   stroke={C.blue}   strokeWidth={2} dot={false} />
+          <Line type="monotone" dataKey="Enterprise" stroke={C.blue}   strokeWidth={2} dot={false} />
+          <Line type="monotone" dataKey="Midmarket"  stroke={C.teal}   strokeWidth={2} dot={false} />
+          <Line type="monotone" dataKey="SMB"        stroke={C.yellow} strokeWidth={2} dot={false} />
         </LineChart>
       </ResponsiveContainer>
     )
   }
-  // Default: pit stop bar
+  // Default: revenue by product bar
   return (
     <ResponsiveContainer width="100%" height="100%">
-      <BarChart data={pitStopByTeamData} margin={{ top: 8, right: 4, bottom: 8, left: -10 }}>
+      <BarChart data={revByProductData} margin={{ top: 8, right: 4, bottom: 8, left: -10 }}>
         <CartesianGrid strokeDasharray="3 3" stroke="#E8ECF0" />
-        <XAxis dataKey="team" tick={{ fontSize: 11, fill: "#5F7281" }} />
-        <YAxis tick={{ fontSize: 11, fill: "#5F7281" }} domain={[1.5, 3.5]} />
+        <XAxis dataKey="name" tick={{ fontSize: 11, fill: "#5F7281" }} />
+        <YAxis tick={{ fontSize: 11, fill: "#5F7281" }} />
         <Tooltip contentStyle={{ fontSize: 12, borderRadius: 4, borderColor: "#E8ECF0" }} />
-        <Bar dataKey="avg" fill={C.blue} radius={[2, 2, 0, 0]} name="Avg (s)" />
+        <Bar dataKey="value" fill={C.blue} radius={[2, 2, 0, 0]} name="Revenue ($k)" />
       </BarChart>
     </ResponsiveContainer>
   )
@@ -1320,95 +1383,92 @@ function StaticOrDynamicWidget({
     )
   }
   switch (id) {
-    case "lap-times":
+    case "rev-trend":
       return (
-        <ChartCard id="lap-times" title="Avg Lap Times by Race" subtitle="Ferrari vs Red Bull vs McLaren — average lap time per race (seconds)">
+        <ChartCard id="rev-trend" title="Revenue Trend" subtitle="Actuals vs forecast — last 6 months + next 6 months">
           <ResponsiveContainer width="100%" height="100%">
-            <AreaChart data={lapTimesData} margin={{ top: 8, right: 4, bottom: 8, left: -10 }}>
+            <AreaChart data={revTrendData} margin={{ top: 8, right: 4, bottom: 8, left: -10 }}>
               <defs>
-                <linearGradient id="ferrariGrad" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#e8484a" stopOpacity={0.18} />
-                  <stop offset="95%" stopColor="#e8484a" stopOpacity={0} />
+                <linearGradient id="actualGrad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor={C.blue} stopOpacity={0.2} />
+                  <stop offset="95%" stopColor={C.blue} stopOpacity={0} />
                 </linearGradient>
               </defs>
               <CartesianGrid strokeDasharray="3 3" stroke="#E8ECF0" vertical={false} />
-              <XAxis dataKey="race" tick={{ fontSize: 9, fill: "#5F7281" }} axisLine={false} tickLine={false} />
-              <YAxis tick={{ fontSize: 11, fill: "#5F7281" }} axisLine={false} tickLine={false} domain={["auto","auto"]} label={{ value: "sec", angle: -90, position: "insideLeft", fontSize: 10, fill: "#5F7281" }} />
+              <XAxis dataKey="month" tick={{ fontSize: 9, fill: "#5F7281" }} axisLine={false} tickLine={false} interval={1} />
+              <YAxis tick={{ fontSize: 11, fill: "#5F7281" }} axisLine={false} tickLine={false} label={{ value: "$M", angle: -90, position: "insideLeft", fontSize: 10, fill: "#5F7281" }} />
               <Tooltip contentStyle={{ fontSize: 12, borderRadius: 4, borderColor: "#E8ECF0" }} />
               <Legend verticalAlign="bottom" iconSize={8} wrapperStyle={{ fontSize: 10, paddingTop: 8 }} />
-              <Area type="monotone" dataKey="Ferrari" stroke="#e8484a" fill="url(#ferrariGrad)" strokeWidth={2} dot={false} name="Ferrari (s)" />
-              <Area type="monotone" dataKey="RedBull" stroke="#1e3a8a" fill="transparent"       strokeWidth={2} dot={false} name="Red Bull (s)" />
-              <Area type="monotone" dataKey="McLaren" stroke="#f97316" fill="transparent"       strokeWidth={2} dot={false} name="McLaren (s)" />
+              <Area type="monotone" dataKey="actual"   stroke={C.blue} fill="url(#actualGrad)" strokeWidth={2} dot={false} name="Actual ($M)" connectNulls />
+              <Area type="monotone" dataKey="forecast" stroke={C.teal} fill="transparent" strokeWidth={2} strokeDasharray="4 3" dot={false} name="Forecast ($M)" connectNulls />
             </AreaChart>
           </ResponsiveContainer>
         </ChartCard>
       )
-    case "constructor-pts":
+    case "rev-by-product":
       return (
-        <ChartCard id="constructor-pts" title="Constructor Standings" subtitle="Championship points by team — 2024 season to date.">
+        <ChartCard id="rev-by-product" title="Revenue by Product Line" subtitle="Breakdown of revenue across product lines for the current period.">
           <ResponsiveContainer width="100%" height="100%">
-            <BarChart data={constructorPtsData} layout="vertical" margin={{ top: 8, right: 24, bottom: 8, left: 8 }}>
+            <BarChart data={revByProductData} margin={{ top: 8, right: 4, bottom: 8, left: -10 }}>
+              <CartesianGrid strokeDasharray="3 3" stroke="#E8ECF0" vertical={false} />
+              <XAxis dataKey="name" tick={{ fontSize: 11, fill: "#5F7281" }} axisLine={false} tickLine={false} />
+              <YAxis tick={{ fontSize: 11, fill: "#5F7281" }} axisLine={false} tickLine={false} label={{ value: "$k", angle: -90, position: "insideLeft", fontSize: 10, fill: "#5F7281" }} />
+              <Tooltip contentStyle={{ fontSize: 12, borderRadius: 4, borderColor: "#E8ECF0" }} />
+              <Bar dataKey="value" fill={C.blue} radius={[2, 2, 0, 0]} name="Revenue ($k)" />
+            </BarChart>
+          </ResponsiveContainer>
+        </ChartCard>
+      )
+    case "pipeline-stage":
+      return (
+        <ChartCard id="pipeline-stage" title="Pipeline by Stage" subtitle="Total pipeline value and deal count at each stage of the funnel.">
+          <ResponsiveContainer width="100%" height="100%">
+            <BarChart data={pipelineStageData} layout="vertical" margin={{ top: 8, right: 16, bottom: 8, left: 16 }}>
               <CartesianGrid strokeDasharray="3 3" stroke="#E8ECF0" horizontal={false} />
-              <XAxis type="number" tick={{ fontSize: 11, fill: "#5F7281" }} axisLine={false} tickLine={false} />
-              <YAxis type="category" dataKey="team" tick={{ fontSize: 11, fill: "#5F7281" }} axisLine={false} tickLine={false} width={68} />
+              <XAxis type="number" tick={{ fontSize: 11, fill: "#5F7281" }} axisLine={false} tickLine={false} label={{ value: "$M", position: "insideBottomRight", offset: -4, fontSize: 10, fill: "#5F7281" }} />
+              <YAxis type="category" dataKey="stage" tick={{ fontSize: 11, fill: "#5F7281" }} axisLine={false} tickLine={false} width={72} />
               <Tooltip contentStyle={{ fontSize: 12, borderRadius: 4, borderColor: "#E8ECF0" }} />
-              <Bar dataKey="points" fill={C.blue} radius={[0, 2, 2, 0]} name="Points" />
+              <Bar dataKey="value" fill={C.teal} radius={[0, 2, 2, 0]} name="Value ($M)" />
             </BarChart>
           </ResponsiveContainer>
         </ChartCard>
       )
-    case "driver-standing":
+    case "quota-attain":
       return (
-        <ChartCard id="driver-standing" title="Driver Points" subtitle="Points scored vs maximum possible — top 6 drivers.">
+        <ChartCard id="quota-attain" title="Quota Attainment by Rep" subtitle="Attainment percentage vs 100% quota target — current quarter.">
           <ResponsiveContainer width="100%" height="100%">
-            <BarChart data={driverStandingsData} margin={{ top: 8, right: 4, bottom: 20, left: -10 }}>
+            <BarChart data={quotaAttainmentData} margin={{ top: 8, right: 4, bottom: 20, left: -10 }}>
               <CartesianGrid strokeDasharray="3 3" stroke="#E8ECF0" vertical={false} />
-              <XAxis dataKey="driver" tick={{ fontSize: 10, fill: "#5F7281" }} axisLine={false} tickLine={false} />
-              <YAxis tick={{ fontSize: 11, fill: "#5F7281" }} axisLine={false} tickLine={false} domain={[0, 260]} />
+              <XAxis dataKey="rep" tick={{ fontSize: 10, fill: "#5F7281" }} axisLine={false} tickLine={false} />
+              <YAxis tick={{ fontSize: 11, fill: "#5F7281" }} axisLine={false} tickLine={false} domain={[0, 140]} />
               <Tooltip contentStyle={{ fontSize: 12, borderRadius: 4, borderColor: "#E8ECF0" }} />
               <Legend verticalAlign="bottom" iconSize={8} wrapperStyle={{ fontSize: 10, paddingTop: 8 }} />
-              <Bar dataKey="pts"    fill={C.blue}   radius={[2, 2, 0, 0]} name="Points" />
-              <Bar dataKey="target" fill="#E8ECF0"  radius={[2, 2, 0, 0]} name="Max (250)" />
+              <Bar dataKey="attainment" fill={C.blue}  radius={[2, 2, 0, 0]} name="Attainment %" />
+              <Bar dataKey="quota"      fill="#E8ECF0" radius={[2, 2, 0, 0]} name="Target (100%)" />
             </BarChart>
           </ResponsiveContainer>
         </ChartCard>
       )
-    case "pit-stops":
+    case "deal-velocity":
       return (
-        <ChartCard id="pit-stops" title="Pit Stop Times by Team" subtitle="Average and fastest pit stop durations — 2024 season.">
+        <ChartCard id="deal-velocity" title="Deal Velocity by Segment" subtitle="Average days to close by customer segment over the last 6 months.">
           <ResponsiveContainer width="100%" height="100%">
-            <BarChart data={pitStopByTeamData} margin={{ top: 8, right: 4, bottom: 20, left: -10 }}>
+            <LineChart data={dealVelocityLine} margin={{ top: 8, right: 4, bottom: 8, left: -10 }}>
               <CartesianGrid strokeDasharray="3 3" stroke="#E8ECF0" vertical={false} />
-              <XAxis dataKey="team" tick={{ fontSize: 10, fill: "#5F7281" }} axisLine={false} tickLine={false} />
-              <YAxis tick={{ fontSize: 11, fill: "#5F7281" }} axisLine={false} tickLine={false} domain={[1.5, 3.5]} label={{ value: "sec", angle: -90, position: "insideLeft", fontSize: 10, fill: "#5F7281" }} />
+              <XAxis dataKey="month" tick={{ fontSize: 11, fill: "#5F7281" }} axisLine={false} tickLine={false} />
+              <YAxis tick={{ fontSize: 11, fill: "#5F7281" }} axisLine={false} tickLine={false} label={{ value: "Days", angle: -90, position: "insideLeft", fontSize: 10, fill: "#5F7281" }} />
               <Tooltip contentStyle={{ fontSize: 12, borderRadius: 4, borderColor: "#E8ECF0" }} />
               <Legend verticalAlign="bottom" iconSize={8} wrapperStyle={{ fontSize: 10, paddingTop: 8 }} />
-              <Bar dataKey="avg"     fill={C.blue}   radius={[2, 2, 0, 0]} name="Avg (s)" />
-              <Bar dataKey="fastest" fill={C.teal}   radius={[2, 2, 0, 0]} name="Fastest (s)" />
-            </BarChart>
-          </ResponsiveContainer>
-        </ChartCard>
-      )
-    case "champ-gap":
-      return (
-        <ChartCard id="champ-gap" title="Championship Gap" subtitle="Points gap between Ferrari, Mercedes, and McLaren over the season.">
-          <ResponsiveContainer width="100%" height="100%">
-            <LineChart data={champGapLine} margin={{ top: 8, right: 4, bottom: 8, left: -10 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#E8ECF0" vertical={false} />
-              <XAxis dataKey="round" tick={{ fontSize: 11, fill: "#5F7281" }} axisLine={false} tickLine={false} />
-              <YAxis tick={{ fontSize: 11, fill: "#5F7281" }} axisLine={false} tickLine={false} label={{ value: "pts", angle: -90, position: "insideLeft", fontSize: 10, fill: "#5F7281" }} />
-              <Tooltip contentStyle={{ fontSize: 12, borderRadius: 4, borderColor: "#E8ECF0" }} />
-              <Legend verticalAlign="bottom" iconSize={8} wrapperStyle={{ fontSize: 10, paddingTop: 8 }} />
-              <Line type="monotone" dataKey="Ferrari"  stroke="#e8484a" strokeWidth={2} dot={false} />
-              <Line type="monotone" dataKey="Mercedes" stroke="#00d2be" strokeWidth={2} dot={false} />
-              <Line type="monotone" dataKey="McLaren"  stroke="#f97316" strokeWidth={2} dot={false} />
+              <Line type="monotone" dataKey="Enterprise" stroke={C.blue}   strokeWidth={2} dot={false} />
+              <Line type="monotone" dataKey="Midmarket"  stroke={C.teal}   strokeWidth={2} dot={false} />
+              <Line type="monotone" dataKey="SMB"        stroke={C.yellow} strokeWidth={2} dot={false} />
             </LineChart>
           </ResponsiveContainer>
         </ChartCard>
       )
-    case "race-strategy":
+    case "rev-flow":
       return (
-        <ChartCard id="race-strategy" title="Race Strategy Flow" subtitle="Tire compound → Team → Finishing position">
+        <ChartCard id="rev-flow" title="Revenue Flow" subtitle="Product Line → Customer Segment → Region">
           <ResponsiveContainer width="100%" height="100%">
             <Sankey
               data={sankeyData}
@@ -1443,19 +1503,19 @@ function StaticOrDynamicWidget({
           </ResponsiveContainer>
         </ChartCard>
       )
-    case "tire-deg":
+    case "retention":
       return (
-        <ChartCard id="tire-deg" title="Tire Degradation" subtitle="Lap time delta by compound over a single stint.">
+        <ChartCard id="retention" title="Retention by Segment" subtitle="Monthly retention rate by customer segment.">
           <ResponsiveContainer width="100%" height="100%">
-            <LineChart data={tireDegData} margin={{ top: 8, right: 4, bottom: 8, left: -10 }}>
+            <LineChart data={retentionTrendData} margin={{ top: 8, right: 4, bottom: 8, left: -10 }}>
               <CartesianGrid strokeDasharray="3 3" stroke="#E8ECF0" vertical={false} />
-              <XAxis dataKey="lap" tick={{ fontSize: 11, fill: "#5F7281" }} axisLine={false} tickLine={false} />
-              <YAxis tick={{ fontSize: 11, fill: "#5F7281" }} axisLine={false} tickLine={false} domain={["auto","auto"]} label={{ value: "sec", angle: -90, position: "insideLeft", fontSize: 10, fill: "#5F7281" }} />
+              <XAxis dataKey="month" tick={{ fontSize: 11, fill: "#5F7281" }} axisLine={false} tickLine={false} />
+              <YAxis tick={{ fontSize: 11, fill: "#5F7281" }} axisLine={false} tickLine={false} domain={[80, 100]} label={{ value: "%", angle: -90, position: "insideLeft", fontSize: 10, fill: "#5F7281" }} />
               <Tooltip contentStyle={{ fontSize: 12, borderRadius: 4, borderColor: "#E8ECF0" }} />
               <Legend verticalAlign="bottom" iconSize={8} wrapperStyle={{ fontSize: 10, paddingTop: 8 }} />
-              <Line type="monotone" dataKey="Soft"   stroke="#e8484a" strokeWidth={2} dot={false} />
-              <Line type="monotone" dataKey="Medium" stroke={C.yellow} strokeWidth={2} dot={false} />
-              <Line type="monotone" dataKey="Hard"   stroke={C.blue}   strokeWidth={2} dot={false} />
+              <Line type="monotone" dataKey="Enterprise" stroke={C.blue}   strokeWidth={2} dot={false} />
+              <Line type="monotone" dataKey="Midmarket"  stroke={C.teal}   strokeWidth={2} dot={false} />
+              <Line type="monotone" dataKey="SMB"        stroke={C.yellow} strokeWidth={2} dot={false} />
             </LineChart>
           </ResponsiveContainer>
         </ChartCard>
@@ -1468,25 +1528,25 @@ function StaticOrDynamicWidget({
 // ─── New widget Genie card ────────────────────────────────────────────────────
 
 const NEW_VIZ_SUGGESTIONS = [
-  "Tire degradation by compound",
-  "Championship points over the season",
-  "Pit stop times by team",
-  "Driver qualifying vs race pace",
+  "Monthly ARR growth over 12 months",
+  "Pipeline value by stage",
+  "Quota attainment by rep",
+  "Deal velocity by segment",
 ]
 
 function getPlan(prompt: string): string {
   const p = prompt.toLowerCase()
-  if (p.includes("tire") || p.includes("tyre") || p.includes("degradation"))
-    return "I'll create a line chart showing lap time degradation by tire compound using f1.lap_times. Does this look right?"
-  if (p.includes("championship") || p.includes("gap") || p.includes("standing"))
-    return "I'll build a line chart showing the championship points gap over the season from f1.race_results. Does this look right?"
-  if (p.includes("pit") || p.includes("stop"))
-    return "I'll create a grouped bar chart showing average and fastest pit stop times by team using f1.pit_stops. Does this look right?"
-  if (p.includes("driver") || p.includes("qualifying") || p.includes("pace"))
-    return "I'll build a grouped bar chart comparing qualifying pace vs race pace by driver from f1.qualifying and f1.lap_times. Does this look right?"
-  if (p.includes("lap") || p.includes("time"))
-    return "I'll create an area chart showing average lap times by race for the top teams using f1.lap_times. Does this look right?"
-  return `I'll build a chart for \"${prompt}\" using the f1.lap_times and f1.race_results tables. Does this look right?`
+  if (p.includes("arr") || p.includes("mrr") || p.includes("trend"))
+    return "I'll create an area chart showing monthly ARR actuals vs. forecast using the ml.revenue_forecast table. Does this look right?"
+  if (p.includes("pipeline") || p.includes("funnel") || p.includes("stage"))
+    return "I'll build a horizontal bar chart showing pipeline value by stage using salesforce.opportunities. Does this look right?"
+  if (p.includes("quota") || p.includes("attainment") || p.includes("rep"))
+    return "I'll create a grouped bar chart comparing quota attainment vs. target by sales rep using salesforce.quotas. Does this look right?"
+  if (p.includes("churn") || p.includes("retention"))
+    return "I'll create a line chart showing monthly retention rates by customer segment from customers.subscriptions. Does this look right?"
+  if (p.includes("region") || p.includes("geo"))
+    return "I'll build a bar chart showing revenue by region from salesforce.opportunities. Does this look right?"
+  return `I'll build a chart for \"${prompt}\" using the salesforce.opportunities and ml.revenue_forecast tables. Does this look right?`
 }
 
 function NewWidgetGenieCard({ onAdd }: { onAdd: (prompt: string) => void }) {
@@ -1811,7 +1871,7 @@ export default function DashboardsPage() {
   const [activeNav, setActiveNav]   = React.useState("dashboards")
   const [aiOpen, setAiOpen]         = React.useState(false)
   const [rightTab, setRightTab]     = React.useState<"genie" | "config">("genie")
-  const [revenueRange, setRevenueRange] = React.useState<[number, number]>([75, 96])
+  const [revenueRange, setRevenueRange] = React.useState<[number, number]>([1, 8])
   const [showTireWidget, setShowTireWidget] = React.useState(false)
   const [activeTab, setActiveTab]   = React.useState("overview")
   const [editMode, setEditMode]         = React.useState(true)
@@ -1851,7 +1911,7 @@ export default function DashboardsPage() {
 
   // Unified ordered widget list (static + dynamic IDs)
   const [widgetOrder, setWidgetOrder] = React.useState<string[]>([
-    "lap-times", "constructor-pts", "driver-standing", "pit-stops", "champ-gap", "race-strategy",
+    "rev-trend", "rev-by-product", "pipeline-stage", "quota-attain", "deal-velocity", "rev-flow",
   ])
 
   // Drag-and-drop state
@@ -1941,14 +2001,14 @@ export default function DashboardsPage() {
       <div className="flex h-full overflow-hidden">
 
         {/* ── Main dashboard area ───────────────────────────────────────── */}
-        <div className="relative flex flex-1 flex-col overflow-y-auto">
+        <div className={cn("relative flex flex-1 flex-col", editMode ? "overflow-hidden" : "overflow-y-auto")}>
 
           {/* Page header */}
           <div className={cn(
             "flex shrink-0 items-center gap-3 border-b border-border px-6 py-3",
             editMode && "bg-primary/5"
           )}>
-            <h1 className="text-lg font-semibold text-foreground">Formula One</h1>
+            <h1 className="text-lg font-semibold text-foreground">Revenue Forecast</h1>
             <button className="text-muted-foreground hover:text-yellow-500 transition-colors">
               <Star size={14} />
             </button>
@@ -2019,8 +2079,8 @@ export default function DashboardsPage() {
           <div className="flex shrink-0 items-center gap-0 border-b border-border px-6">
             {[
               { id: "overview",  label: "Overview" },
-              { id: "teams",     label: "Team Performance" },
-              { id: "drivers",   label: "Drivers" },
+              { id: "pipeline",  label: "Pipeline" },
+              { id: "regional",  label: "Regional" },
             ].map((tab) => (
               <button
                 key={tab.id}
@@ -2042,41 +2102,41 @@ export default function DashboardsPage() {
 
             {/* Left filter panel */}
             <div className="flex w-[210px] shrink-0 flex-col gap-5 rounded-md border border-border bg-background p-4 shadow-[var(--shadow-db-sm)]">
-              {/* Driver */}
+              {/* Product Line */}
               <div className="flex flex-col gap-1.5">
-                <label className="text-[11px] font-semibold text-muted-foreground">Driver</label>
+                <label className="text-[11px] font-semibold text-muted-foreground">Product Line</label>
                 <button className="flex items-center justify-between rounded border border-border bg-background px-3 py-1.5 text-xs text-foreground hover:bg-secondary transition-colors">
-                  All Drivers
+                  All Products
                   <ChevronDown size={11} className="text-muted-foreground" />
                 </button>
               </div>
-              {/* Team */}
+              {/* Segment */}
               <div className="flex flex-col gap-1.5">
-                <label className="text-[11px] font-semibold text-muted-foreground">Team</label>
+                <label className="text-[11px] font-semibold text-muted-foreground">Segment</label>
                 <button className="flex items-center justify-between rounded border border-border bg-background px-3 py-1.5 text-xs text-foreground hover:bg-secondary transition-colors">
-                  All Teams
+                  All Segments
                   <ChevronDown size={11} className="text-muted-foreground" />
                 </button>
               </div>
-              {/* Season */}
+              {/* Date range */}
               <div className="flex flex-col gap-1.5">
-                <label className="text-[11px] font-semibold text-muted-foreground">Season</label>
+                <label className="text-[11px] font-semibold text-muted-foreground">Date range</label>
                 <div className="flex items-center gap-1 rounded border border-border bg-background px-3 py-1.5 text-xs text-foreground">
-                  Mar 2, 2024
+                  Oct 1, 2025
                   <span className="mx-1 text-muted-foreground">→</span>
-                  Nov 24, 2024
+                  Sep 30, 2026
                   <CalendarIcon size={11} className="ml-auto text-muted-foreground" />
                 </div>
               </div>
-              {/* Lap time range */}
+              {/* Revenue range */}
               <div className="flex flex-col gap-2">
                 <div className="flex items-center justify-between">
-                  <label className="text-[11px] font-semibold text-muted-foreground">Lap times (s)</label>
+                  <label className="text-[11px] font-semibold text-muted-foreground">Revenue range ($M)</label>
                 </div>
-                <RangeSlider min={70} max={100} value={revenueRange} onChange={setRevenueRange} />
+                <RangeSlider min={0} max={10} value={revenueRange} onChange={setRevenueRange} />
                 <div className="flex justify-between text-[11px] text-muted-foreground">
-                  <span>{revenueRange[0]}s</span>
-                  <span>{revenueRange[1]}s</span>
+                  <span>${revenueRange[0]}M</span>
+                  <span>${revenueRange[1]}M</span>
                 </div>
               </div>
             </div>
@@ -2084,9 +2144,9 @@ export default function DashboardsPage() {
             {/* KPI cards */}
             <div className="grid flex-1 grid-cols-3 gap-4">
               {([
-                { label: "Avg Lap Time",   period: "2024 season",    value: "1:23.847", delta: "−0.3s",  compare: "1:24.1s • 2023 avg",     spark: kpiSpark1, color: C.orange },
-                { label: "Avg Pit Stop",   period: "2024 season",    value: "2.6s",     delta: "−0.1s",  compare: "2.7s • 2023 avg",         spark: kpiSpark2, color: C.blue  },
-                { label: "Race Wins",      period: "Season to date", value: "9",        delta: "Red Bull leads", compare: "VER 6 · NOR 3 · LEC 2", spark: kpiSpark3, color: C.teal  },
+                { label: "6-Mo Forecast",  period: "Apr – Sep 2026", value: "$30.2M", delta: "+11%", compare: "$27.2M • prior period", spark: kpiSpark1, color: C.blue  },
+                { label: "Win Rate",        period: "Current quarter", value: "42%",    delta: "+4pp", compare: "38% • last quarter",   spark: kpiSpark2, color: C.teal  },
+                { label: "Quota Attainment",period: "Current quarter", value: "95%",    delta: "+2pp", compare: "93% • last quarter",   spark: kpiSpark3, color: C.green },
               ] as const).map((kpi) => (
                 <div key={kpi.label} className="relative flex flex-col justify-between overflow-hidden rounded-md border border-border bg-background p-4 shadow-[var(--shadow-db-sm)]">
                   {/* Sparkline in top-right */}
@@ -2121,7 +2181,7 @@ export default function DashboardsPage() {
           </div>
 
           {/* Charts grid — single flat grid-cols-3, drag-and-drop in edit mode */}
-          <div className="bg-muted/20 p-6">
+          <div className={cn("bg-muted/20 p-6", editMode && "flex-1 overflow-y-auto")}>
             <div className="grid grid-cols-3 gap-5">
 
               {/* Render all widgets in order — draggable in edit mode */}
@@ -2246,7 +2306,7 @@ export default function DashboardsPage() {
                         if (e.key === "Enter") submitAskGenie()
                         if (e.key === "Escape") { setAskGenieEditing(false); setAskGenieQuery("") }
                       }}
-                      placeholder="Which team had the fastest pit stops?"
+                      placeholder="Which rep has the highest quota attainment?"
                       className="w-[300px] bg-transparent py-2.5 text-xs text-foreground outline-none placeholder:text-muted-foreground/40"
                     />
                   ) : (
@@ -2254,13 +2314,13 @@ export default function DashboardsPage() {
                       onClick={() => { setAskGenieEditing(true); setAskGenieQuery("") }}
                       className="py-2.5 pr-2 text-xs text-muted-foreground/70 transition-colors hover:text-muted-foreground"
                     >
-                      Which team had the fastest pit stops?
+                      Which rep has the highest quota attainment?
                     </button>
                   )}
 
                   {/* Gradient send circle */}
                   <button
-                    onClick={() => askGenieEditing ? submitAskGenie() : submitAskGenie("Which team had the fastest pit stops?")}
+                    onClick={() => askGenieEditing ? submitAskGenie() : submitAskGenie("Which rep has the highest quota attainment?")}
                     disabled={askGenieEditing && !askGenieQuery.trim()}
                     className={cn(
                       "my-1.5 mr-1.5 flex h-[28px] w-[28px] shrink-0 items-center justify-center rounded-full transition-all hover:scale-105 active:scale-95",
@@ -2325,7 +2385,7 @@ export default function DashboardsPage() {
                         }
                         if (e.key === "Escape") { setEditPillEditing(false); setEditPillQuery("") }
                       }}
-                      placeholder="What should we change on this dashboard today?"
+                      placeholder="What should we update on this forecast?"
                       className="w-[300px] bg-transparent py-2.5 text-xs text-foreground outline-none placeholder:text-muted-foreground/40"
                     />
                   ) : (
@@ -2333,7 +2393,7 @@ export default function DashboardsPage() {
                       onClick={() => { setEditPillEditing(true); setEditPillQuery("") }}
                       className="py-2.5 pr-2 text-xs text-muted-foreground/70 transition-colors hover:text-muted-foreground"
                     >
-                      What should we change on this dashboard today?
+                      What should we update on this forecast today?
                     </button>
                   )}
 

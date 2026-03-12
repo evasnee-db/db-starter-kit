@@ -10,18 +10,18 @@ import { cn } from "@/lib/utils"
 
 const SUGGESTED = [
   {
+    id: "revenue-forecast",
+    title: "Revenue Forecast",
+    reason: "You view frequently",
+    href: "/dashboards/revenue-forecast",
+    preview: "forecast",
+  },
+  {
     id: "formula-one",
     title: "Formula One Racing",
     reason: "You view frequently",
     href: "/dashboards/formula-one",
     preview: "f1",
-  },
-  {
-    id: "quarterly-forecast",
-    title: "Quarterly Forecast",
-    reason: "You view frequently",
-    href: null,
-    preview: "forecast",
   },
   {
     id: "pipeline-health",
@@ -52,6 +52,7 @@ type Dashboard = {
 }
 
 const ALL_DASHBOARDS: Dashboard[] = [
+  { id: "0",  name: "Revenue Forecast",                 reason: "You view frequently",  domain: "Sales",                    owner: "Nina Adams",    ownerInitial: "N", ownerColor: "bg-blue-500",   href: "/dashboards/revenue-forecast" },
   { id: "1",  name: "Formula One Racing",               reason: "You view frequently",  domain: "Data Science & AI",        owner: "Nina Adams",    ownerInitial: "N", ownerColor: "bg-blue-500",   href: "/dashboards/formula-one" },
   { id: "2",  name: "Sales Supply Chain Optimization",  reason: "You view frequently",  domain: "Governance & Complia...",  owner: "Nina Adams",    ownerInitial: "N", ownerColor: "bg-blue-500",   href: null },
   { id: "3",  name: "Sales Pipeline Manager",           reason: "Viewed 2 hours ago",   domain: "Sales",                    owner: "Liam Baker",    ownerInitial: "L", ownerColor: "bg-green-500",  href: null },
